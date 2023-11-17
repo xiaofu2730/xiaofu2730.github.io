@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- [!!] remember to change the 【base】 tag -->
 <head>
+    <base href="../" target="_blank">
 	<title>XiaoFu's HomePage</title>
 	<link rel="shortcut icon" href="images/profile_photo/logo.jpg" type="image/x-icon">
 	<meta charset="utf-8">
@@ -41,32 +43,7 @@
 
 	<div id="colorlib-page">
 		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-		<aside id="colorlib-aside" role="complementary" class="js-fullheight text-center">
-			<h1 id="colorlib-logo"><a href="index.html"><span class="img"
-						style="background-image: url(images/profile_photo/comic.jpg);"></span>XiaoFu Chen</a></h1>
-			<nav id="colorlib-main-menu" role="navigation">
-				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="collection.html">Collection</a></li>
-					<li><a href="about.html">About Me</a></li>
-					<li class="colorlib-active"><a href="services.html">Biography</a></li>
-					<li><a href="blog.html">Blog</a></li>
-					<li><a href="contact.html">Contact</a></li>
-				</ul>
-			</nav>
-
-			<div class="colorlib-footer">
-				<h3>Newsletter</h3>
-				<div class="d-flex justify-content-center">
-					<form action="#" class="colorlib-subscribe-form">
-						<div class="form-group d-flex">
-							<div class="icon"><span class="icon-paper-plane"></span></div>
-							<input type="text" class="form-control" placeholder="Enter Email Address">
-						</div>
-					</form>
-				</div>
-			</div>
-		</aside> <!-- END COLORLIB-ASIDE -->
+        <script src="./js/page_aside.js"></script>
 		<div id="colorlib-main">
 			<section class="ftco-section ftco-bread">
 				<div class="container">
@@ -87,84 +64,9 @@
 							<span id="busuanzi_container_site_uv">
 								<center>(*￣3￣)╭ 你是第<span id="busuanzi_value_page_pv"></span>位来访的小盆友🤠 \(￣︶￣*\)</center>
 							</span>
-							<iframe class="myif" frameborder="no" border="0" marginwidth="0" marginheight="0" width=500
-								height=86
-								src="//music.163.com/outchain/player?type=2&id=1456827851&auto=0&height=66"></iframe>
-							<pre class="md-bquote">如果你觉得跑不动了，可以仰望头顶的天空༼ つ ◕_◕ ༽つ                  
-		    	       -leo once said
-哈哈哈，这是大一院运动会800m比赛时候一个童鞋教我的，每当我在塑胶跑道上跑不动的时候，都会想起来</pre>
-							<p>
-								最近有点迷上了毕业季的音乐，大概是十几年的肌肉记忆，又是一个三年之期，就像初中毕业的时候迷上《再见再见》，高中毕业时候喜欢《不说再见》...
-							</p>
-							<pre class="md-bquote">害＞︿＜，折腾了很久的ChatGPT机器人还是夭折了，看了一下日志，它只在服务器上不眠不休陪伴了七天
-本来想吐槽一下QQ的协议怎么就那么rigorous，想想还是算了，安全嘛，可以理解🥹
-Anyway, making progress就好😊</pre>
+                            <p></p>
 							<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=730 height=2000
 								src="./lib/html/1.html"></iframe>
-							<ol id="write">
-								<li ::marker>
-									这只是一个木有坏心思的列表🥳
-								</li>
-								<li ::marker>
-									是谁只知道手写html，前端一点不懂啊🤯
-								</li>
-								<li ::marker>
-									U1S1，好妹妹乐队的歌真是YYDS，特别是《晚风》、《云野》，单曲循环都听不厌😎
-								</li>
-								<li ::marker>
-									明天是母亲节，在测试页面上附一首墙裂安利（￣︶￣）音乐《茉莉花妈妈》👍
-								</li>
-								<li ::marker>
-									好吧，夜深了，摘掉耳机入睡吧😪
-								</li>
-							</ol>
-							<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=500 height=86
-								src="//music.163.com/outchain/player?type=2&id=1843028827&auto=1&height=66"></iframe>
-							<p>既然睡不着就放两张图片镇楼，希望晚上蚊子少点╥﹏╥...</p>
-							<iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="150"
-								style="width:100%;max-width:660px;overflow:hidden;background:transparent;"
-								sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-								src="https://embed.music.apple.com/cn/album/the-last-light/1611915394?i=1611915641"></iframe>
-							<h2 class="mb-3 mt-5 font-weight-bold">#2. 解放公园(非常值得一去)和黄鹤楼(劝退)</h2>
-							<p>
-								第一张解放公园的花，不知道啥名字
-								<img src="images/image_1.jpg" alt="" class="img-fluid">
-							</p>
-
-							<p>
-								第二张站在黄鹤楼上眺望长江大桥
-								<img src="images/image_2.jpg" alt="" class="img-fluid">
-							</p>
-							<h2 class="mb-3 mt-5 font-weight-bold">#3. 代码渲染测试</h2>
-							<p>下面是一段人畜无害=><span class="ic">hjs的测试代码👇【GitHub主题】</span></p>
-							<pre><code class="language-python">def main(args,phase):
-#【1】 Init dataset of synthetic images from (real | noise)
-
-#【2】 Init [lr, loss_func, optimizer]
-
-#【3】 Init first buffer from one randomized buffer file // each buffer has 10 teacher model trajectories
-
-#【4】 Prepared to train and evaluate 
-for it in range(0,args.Iterations+1):
-	#【4.1】 eval and store at a regular basis
-	if it%100 == 0:
-		# Evaluate synthetic data with diff model architecture
-		if it%1000 == 0 or save_this_it:
-			# save current best synthetic dataset
-			
-	#【4.2】 prepare to train syn_steps on student model
-	Init student model and select one teacher from current buffer
-	Init [start_epoch,starting_params,target_params,student_params]
-	for step in range(args.syn_steps):
-		get batch-synthetic images
-		compute grad and update forward_param
-		store new forward_param in student_param
-		
-	#【4.3】 compute loss of one expert's tm and optimize syn_img
-	compute and store param_loss as well as param_dist
-	grand_loss=param_loss/param_dist
-	grand_loss.backward()
-	optimize syn_img and lr</code></pre>
 							<div class="tag-widget post-tag-container mb-5 mt-5">
 								<div class="tagcloud">
 									<a href="#" class="tag-cloud-link">Life</a>
@@ -173,18 +75,6 @@ for it in range(0,args.Iterations+1):
 									<a href="#" class="tag-cloud-link">Travel</a>
 								</div>
 							</div>
-
-							<!-- <div class="about-author d-flex p-4 bg-light">
-								<div class="bio mr-5">
-									<img src="images/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4">
-								</div>
-								<div class="desc">
-									<h3>George Washington</h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem
-										necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa
-										sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-								</div>
-							</div> -->
 							<div class="comment-form-wrap pt-5">
 								<h3 class="mb-5">Leave a comment</h3>
 								<form action="#" class="p-3 p-md-5 bg-light">
@@ -212,112 +102,6 @@ for it in range(0,args.Iterations+1):
 
 								</form>
 							</div>
-							<!-- <div class="pt-5 mt-5"> -->
-							<!-- <h3 class="mb-5 font-weight-bold">6 Comments</h3> -->
-							<!-- <ul class="comment-list">
-									<li class="comment">
-										<div class="vcard bio">
-											<img src="images/person_1.jpg" alt="Image placeholder">
-										</div>
-										<div class="comment-body">
-											<h3>John Doe</h3>
-											<div class="meta">October 03, 2018 at 2:21pm</div>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem
-												laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat
-												saepe enim sapiente iste iure! Quam voluptas earum impedit
-												necessitatibus, nihil?</p>
-											<p><a href="#" class="reply">Reply</a></p>
-										</div>
-									</li>
-
-									<li class="comment">
-										<div class="vcard bio">
-											<img src="images/person_1.jpg" alt="Image placeholder">
-										</div>
-										<div class="comment-body">
-											<h3>John Doe</h3>
-											<div class="meta">October 03, 2018 at 2:21pm</div>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem
-												laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat
-												saepe enim sapiente iste iure! Quam voluptas earum impedit
-												necessitatibus, nihil?</p>
-											<p><a href="#" class="reply">Reply</a></p>
-										</div>
-
-										<ul class="children">
-											<li class="comment">
-												<div class="vcard bio">
-													<img src="images/person_1.jpg" alt="Image placeholder">
-												</div>
-												<div class="comment-body">
-													<h3>John Doe</h3>
-													<div class="meta">October 03, 2018 at 2:21pm</div>
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-														Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-														autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
-														voluptas earum impedit necessitatibus, nihil?</p>
-													<p><a href="#" class="reply">Reply</a></p>
-												</div>
-
-
-												<ul class="children">
-													<li class="comment">
-														<div class="vcard bio">
-															<img src="images/person_1.jpg" alt="Image placeholder">
-														</div>
-														<div class="comment-body">
-															<h3>John Doe</h3>
-															<div class="meta">October 03, 2018 at 2:21pm</div>
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-																Pariatur quidem laborum necessitatibus, ipsam impedit
-																vitae autem, eum officia, fugiat saepe enim sapiente
-																iste iure! Quam voluptas earum impedit necessitatibus,
-																nihil?</p>
-															<p><a href="#" class="reply">Reply</a></p>
-														</div>
-
-														<ul class="children">
-															<li class="comment">
-																<div class="vcard bio">
-																	<img src="images/person_1.jpg"
-																		alt="Image placeholder">
-																</div>
-																<div class="comment-body">
-																	<h3>John Doe</h3>
-																	<div class="meta">October 03, 2018 at 2:21pm</div>
-																	<p>Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit. Pariatur quidem laborum
-																		necessitatibus, ipsam impedit vitae autem, eum
-																		officia, fugiat saepe enim sapiente iste iure!
-																		Quam voluptas earum impedit necessitatibus,
-																		nihil?</p>
-																	<p><a href="#" class="reply">Reply</a></p>
-																</div>
-															</li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-
-									<li class="comment">
-										<div class="vcard bio">
-											<img src="images/person_1.jpg" alt="Image placeholder">
-										</div>
-										<div class="comment-body">
-											<h3>John Doe</h3>
-											<div class="meta">October 03, 2018 at 2:21pm</div>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem
-												laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat
-												saepe enim sapiente iste iure! Quam voluptas earum impedit
-												necessitatibus, nihil?</p>
-											<p><a href="#" class="reply">Reply</a></p>
-										</div>
-									</li>
-								</ul> -->
-							<!-- END comment-list -->
-							<!-- </div> -->
 						</div> <!-- .col-md-8 -->
 						<div class="col-lg-4 sidebar ftco-animate bg-light">
 							<div class="sidebar-box">
