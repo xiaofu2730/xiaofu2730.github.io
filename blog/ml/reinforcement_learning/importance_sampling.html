@@ -65,8 +65,16 @@
 								<center>(*￣3￣)╭ 你是第<span id="busuanzi_value_page_pv"></span>位来访的小盆友🤠 \(￣︶￣*\)</center>
 							</span>
                             <p></p>
-							<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=60% 
+							<iframe id="dynamic-iframe"  frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=60% 
 								src="./lib/html/ml/reinforcement_learning/importance_sampling.html"></iframe>
+							<script>
+								function adjustIframeHeight() {
+									const iframe = document.getElementById('dynamic-iframe');
+									iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+								}
+								document.getElementById('dynamic-iframe').onload = adjustIframeHeight;
+							</script>
+								
 							<div class="tag-widget post-tag-container mb-5 mt-5">
 								<div class="tagcloud">
 									<a href="#" class="tag-cloud-link">Life</a>
