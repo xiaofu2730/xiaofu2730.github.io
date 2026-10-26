@@ -1,294 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>强化学习 - 重要性采样及应用 | XiaoFu&#39;s HomePage</title>
+    <link rel="shortcut icon" href="../../../images/profile_photo/logo.jpg" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- [!!] remember to change the 【base】 tag -->
-<head>
-    <base href="../../../" target="_blank">
-	<title>XiaoFu's HomePage</title>
-	<link rel="shortcut icon" href="images/profile_photo/logo.jpg" type="image/x-icon">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/github.css">
-	<script src="js/highlight.min.js"></script>
-	<script>hljs.highlightAll();</script>
+    <link rel="stylesheet" href="../../../css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../../../css/animate.css">
+    <link rel="stylesheet" href="../../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../../css/magnific-popup.css">
+    <link rel="stylesheet" href="../../../css/aos.css">
+    <link rel="stylesheet" href="../../../css/ionicons.min.css">
+    <link rel="stylesheet" href="../../../css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../../../css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../../../css/flaticon.css">
+    <link rel="stylesheet" href="../../../css/icomoon.css">
+    <link rel="stylesheet" href="../../../css/github.css">
+    <link rel="stylesheet" href="../../../css/md.css">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+    <script src="../../../js/highlight.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="colorlib-page">
+      <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+<aside id="colorlib-aside" role="complementary" class="js-fullheight text-center">
+  <h1 id="colorlib-logo"><a href="../../../index.html"><span class="img" style="background-image: url(../../../images/profile_photo/comic.jpg);"></span>XiaoFu Chen</a></h1>
+  <nav id="colorlib-main-menu" role="navigation">
+    <ul>
+      <li><a href="../../../index.html">Home</a></li>
+      <li><a href="../../../collection.html">Collection</a></li>
+      <li><a href="../../../about.html">About Me</a></li>
+      <li><a href="../../../services.html">Biography</a></li>
+      <li class="colorlib-active"><a href="../../../blog.html">Blog</a></li>
+      <li><a href="../../../contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-	<link rel="stylesheet" href="css/md.css">
+  <div class="colorlib-footer">
+    <h3>Notes & Writing</h3>
+    <p class="mb-0">Research notes, personal essays, and lightweight publishing from Markdown sources.</p>
+  </div>
+</aside>      <div id="colorlib-main">
+<section class="ftco-section ftco-bread">
+  <div class="container">
+    <div class="row no-gutters slider-text justify-content-center align-items-center">
+      <div class="col-md-8 ftco-animate">
+        <p class="breadcrumbs">
+          <span class="mr-2"><a href="../../../index.html">Home</a></span>
+          <span class="mr-2">
+            <a href="../../../blog.html">Blog</a>
+          </span>
+          <span class="mr-2">
+            ML
+          </span>
+          <span class="mr-2">
+            Reinforcement Learning
+          </span>
+          <span>强化学习 - 重要性采样及应用</span>
+        </p>
+        <h1 class="bread">Reinforcement Learning</h1>
+      </div>
+    </div>
+  </div>
+</section>
 
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet">
+<section class="ftco-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 ftco-animate">
+        <article class="generated-post">
+          <h2 class="mb-3 font-weight-bold">强化学习 - 重要性采样及应用</h2>
+          <p class="generated-post-subtitle">Reinforcement learning reading note</p>
 
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
-
-	<link rel="stylesheet" href="css/aos.css">
-
-	<link rel="stylesheet" href="css/ionicons.min.css">
-
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="css/jquery.timepicker.css">
-
-
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-
-	<div id="colorlib-page">
-		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-        <script src="./js/page_aside.js"></script>
-		<div id="colorlib-main">
-			<section class="ftco-section ftco-bread">
-				<div class="container">
-					<div class="row no-gutters slider-text justify-content-center align-items-center">
-						<div class="col-md-8 ftco-animate">
-							<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span
-									class="mr-2"><a href="blog.html">Blog</a></span> <span>Blog Single</span></p>
-							<h1 class="bread">Reinforcement Learning</h1>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section class="ftco-section">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 ftco-animate">
-							<h2 class="mb-3 font-weight-bold">😉强化学习-重要性采样及应用😭</h2>
-							<span id="busuanzi_container_site_uv">
-								<center>(*￣3￣)╭ 你是第<span id="busuanzi_value_page_pv"></span>位来访的小盆友🤠 \(￣︶￣*\)</center>
-							</span>
-                            <p></p>
-							<iframe id="dynamic-iframe"  frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=60% 
-								src="./lib/html/ml/reinforcement_learning/importance_sampling.html"></iframe>
-							<script>
-								function adjustIframeHeight() {
-									const iframe = document.getElementById('dynamic-iframe');
-									iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-								}
-								document.getElementById('dynamic-iframe').onload = adjustIframeHeight;
-							</script>
-								
-							<div class="tag-widget post-tag-container mb-5 mt-5">
-								<div class="tagcloud">
-									<a href="#" class="tag-cloud-link">Life</a>
-									<a href="#" class="tag-cloud-link">Sport</a>
-									<a href="#" class="tag-cloud-link">Tech</a>
-									<a href="#" class="tag-cloud-link">Travel</a>
-								</div>
-							</div>
-
-						</div> <!-- .col-md-8 -->
-						<div class="col-lg-4 sidebar ftco-animate bg-light">
-							<div class="sidebar-box">
-								<form action="#" class="search-form">
-									<div class="form-group">
-										<span class="icon icon-search"></span>
-										<input type="text" class="form-control"
-											placeholder="Type a keyword and hit enter">
-									</div>
-								</form>
-							</div>
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Categories</h3>
-								<ul class="categories">
-									<li><a href="#">Fashion <span>(6)</span></a></li>
-									<li><a href="#">Technology <span>(8)</span></a></li>
-									<li><a href="#">Travel <span>(2)</span></a></li>
-									<li><a href="#">Food <span>(2)</span></a></li>
-									<li><a href="#">Photography <span>(7)</span></a></li>
-								</ul>
-							</div>
-
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Popular Articles</h3>
-								<div class="block-21 mb-4 d-flex">
-									<a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-									<div class="text">
-										<h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-												control</a></h3>
-										<div class="meta">
-											<div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2018</a></div>
-											<div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-											<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-										</div>
-									</div>
-								</div>
-								<div class="block-21 mb-4 d-flex">
-									<a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-									<div class="text">
-										<h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-												control</a></h3>
-										<div class="meta">
-											<div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2018</a></div>
-											<div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-											<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-										</div>
-									</div>
-								</div>
-								<div class="block-21 mb-4 d-flex">
-									<a class="blog-img mr-4" style="background-image: url(images/image_3.jpg);"></a>
-									<div class="text">
-										<h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-												control</a></h3>
-										<div class="meta">
-											<div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2018</a></div>
-											<div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-											<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Tag Cloud</h3>
-								<ul class="tagcloud">
-									<a href="#" class="tag-cloud-link">animals</a>
-									<a href="#" class="tag-cloud-link">human</a>
-									<a href="#" class="tag-cloud-link">people</a>
-									<a href="#" class="tag-cloud-link">cat</a>
-									<a href="#" class="tag-cloud-link">dog</a>
-									<a href="#" class="tag-cloud-link">nature</a>
-									<a href="#" class="tag-cloud-link">leaves</a>
-									<a href="#" class="tag-cloud-link">food</a>
-								</ul>
-							</div>
-
-							<div class="sidebar-box subs-wrap img" style="background-image: url(images/bg_1.jpg);">
-								<div class="overlay"></div>
-								<h3 class="mb-4 sidebar-heading">Newsletter</h3>
-								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
-								</p>
-								<form action="#" class="subscribe-form">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Email Address">
-										<input type="submit" value="Subscribe" class="mt-2 btn btn-white submit">
-									</div>
-								</form>
-							</div>
-
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Archives</h3>
-								<ul class="categories">
-									<li><a href="#">October 2018 <span>(10)</span></a></li>
-									<li><a href="#">September 2018 <span>(6)</span></a></li>
-									<li><a href="#">August 2018 <span>(8)</span></a></li>
-									<li><a href="#">July 2018 <span>(2)</span></a></li>
-									<li><a href="#">June 2018 <span>(7)</span></a></li>
-									<li><a href="#">May 2018 <span>(5)</span></a></li>
-								</ul>
-							</div>
+          <div class="generated-post-meta">
+            <span>Feb 24, 2025</span>
+            <span><a href="../../../blog.html?category=ml">ML</a></span>
+            <span>Reinforcement Learning</span>
+            <span>约 1535 字</span>
+            <span>预计阅读 5 分钟</span>
+          </div>
 
 
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Paragraph</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem
-									necessitatibus voluptate quod mollitia delectus aut.</p>
-							</div>
-						</div><!-- END COL -->
-					</div>
-				</div>
-			</section>
-			<footer class="ftco-footer ftco-bg-dark ftco-section">
-				<div class="container px-md-5">
-					<div class="row mb-5">
-						<div class="col-md">
-							<div class="ftco-footer-widget mb-4 ml-md-4">
-								<h2 class="ftco-heading-2">Recent Photos</h2>
-								<ul class="list-unstyled photo">
-									<li><a href="#" class="img" style="background-image: url(images/image_1.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_2.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_3.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_4.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_5.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_6.jpg);"></a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md">
-							<div class="ftco-footer-widget mb-4">
-								<h2 class="ftco-heading-2">Archives</h2>
-								<ul class="list-unstyled categories">
-									<li><a href="#">November 2018 <span>(105)</span></a></li>
-									<li><a href="#">October 2018 <span>(212)</span></a></li>
-									<li><a href="#">September 2018 <span>(150)</span></a></li>
-									<li><a href="#">August 2018 <span>(100)</span></a></li>
-									<li><a href="#">July 2018 <span>(200)</span></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md">
-							<div class="ftco-footer-widget mb-4">
-								<h2 class="ftco-heading-2">Have a Questions?</h2>
-								<div class="block-23 mb-3">
-									<ul>
-										<li><span class="icon icon-map-marker"></span><span class="text">203 Fake St.
-												Mountain View, San Francisco, California, USA</span></li>
-										<li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392
-													3929 210</span></a></li>
-										<li><a href="#"><span class="icon icon-envelope"></span><span
-													class="text">info@yourdomain.com</span></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
+          <div class="md-toc-card">
+            <h3>On This Page</h3>
+            <ul>
+              <li class="toc-level-1"><a href="#deeprl-from-on-policy-to-off-policy">DeepRL: From On-Policy to Off-Policy</a></li>
+              <li class="toc-level-2"><a href="#1-why-off-policy">1 Why Off-Policy ?</a></li>
+              <li class="toc-level-3"><a href="#11-definition">1.1 Definition</a></li>
+              <li class="toc-level-3"><a href="#12">1.2 策略梯度回顾</a></li>
+              <li class="toc-level-3"><a href="#12_1">1.2 策略梯度的问题</a></li>
+              <li class="toc-level-2"><a href="#2-importance-sampling">2 Importance Sampling</a></li>
+              <li class="toc-level-2"><a href="#3-off-policy">3 Off-policy</a></li>
+            </ul>
+          </div>
 
-							<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>document.write(new Date().getFullYear());</script> All rights reserved | This
-								template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-					</div>
-				</div>
-			</footer>
-		</div><!-- END COLORLIB-MAIN -->
-	</div><!-- END COLORLIB-PAGE -->
+          <div id="write" class="blog-markdown">
+            <h1 id="deeprl-from-on-policy-to-off-policy">DeepRL: From On-Policy to Off-Policy</h1>
+<h2 id="1-why-off-policy">1 Why Off-Policy ?</h2>
+<h3 id="11-definition">1.1 Definition</h3>
+<ul>
+<li>On-policy: 需要学习的对象和环境交互的对象是同一个 (自己在亲身实践中学习)</li>
+<li>Off-policy: 需要学习的对象和环境交互的不是同一个 (看着别人学下棋)</li>
+</ul>
+<p>On-policy存在的问题：第一种在策略梯度方法时候，需要每个训练周期分为两个阶段：</p>
+<ol>
+<li>collect data</li>
+<li>update model</li>
+</ol>
+<h3 id="12">1.2 策略梯度回顾</h3>
+<p>对于一个参数为<span class="katex-inline">$\theta$</span> 的执行者，策略梯度优化的目标是：</p>
+<div class="katex-display-block">$$
+\max \overline{\mathcal{R}}_{\theta } = \sum _{\tau }\mathcal{R}(\tau )\cdot p_{\theta }(\tau )
+$$</div>
+<p>即最大化执行者在所有可能轨迹上的总回报的期望。</p>
+<p>我们要计算目标函数对参数<span class="katex-inline">$\theta$</span>的梯度，暂时只考虑<span class="katex-inline">$p_{\theta}(\tau)$</span>这一项和<span class="katex-inline">$\theta$</span>有关，那么只需要考虑这一项的梯度。不难求出这一项的梯度展开如下</p>
+<div class="katex-display-block">$$
+\begin{aligned} p_{\theta }(\tau ) = p(s_{1})p(a_{1}|s_{1})p(s_{2}|s_{1},a_{1})⋯p(s_{T}) \\ \nabla p_{\theta }(\tau ) = p_{\theta }(\tau )\cdot \nabla \mathrm{log}⁡p_{\theta }(\tau ) \end{aligned}
+$$</div>
+<p>通过梯度公式，将函数连乘的梯度转换为函数和的梯度。这里我们进一步合理假设环境变化的概率和执行者的参数无关，那么<span class="katex-inline">$\nabla_{\theta} p(s_i|\cdot) = 0$</span>。于是我们计算出这一项梯度为：</p>
+<div class="katex-display-block">$$
+\nabla p_{\theta }(\tau ) = p_{\theta }(\tau )\sum _{t = 1}^{T}\nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t})
+$$</div>
+<p>所以目标函数的梯度可以写为：</p>
+<div class="katex-display-block">$$
+\begin{aligned} \nabla \overline{\mathcal{R}}_{\theta } = \sum _{\tau }p_{\theta }(\tau )\cdot \mathcal{R}(\tau )\sum _{t = 1}^{T}\nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t}) \\ = \mathbb{E}_{\tau \sim p_{\theta }(\tau )}[\sum _{t = 1}^{T}\mathcal{R}(\tau )\cdot \nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t})] \\ = \mathbb{E}_{(s_{t},a_{t})\sim \pi _{\theta }}[A(s_{t},a_{t})\cdot \nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t})] \\ \approx \frac{1}{N}\sum _{i = 1}^{N}\sum _{t = 1}^{T_{i}-1}A(s_{t},a_{t})\nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t}) \end{aligned}
+$$</div>
+<p>注意最后参数要向着目标函数值增大的方向更新，所以时加上梯度乘以学习率。最后使用了优势函数来替换每一个episode的总体回报。常见的优势函数设计如下：</p>
+<div class="katex-display-block">$$
+A(s_{t},a_{t}) = \sum _{t^{′} = t}\gamma ^{t^{′}-t}\cdot r_{t^{′}} ,\gamma &lt;1
+$$</div>
+<h3 id="12_1">1.2 策略梯度的问题</h3>
+<p>策略梯度作为一种on-policy方法，阶段一中需要收集大量的轨迹数据，也就是多组学习者和环境交互的轨迹。这是一个非常耗时的过程，但在训练周期中收集的数据只能被用来更新一次参数，下一个周期就要重新收集(因为轨迹和学习参数相关！)，这会导致训练的效率极低。</p>
+<p>于是会自然的提出一个问题：我们是否可以从执行者参数无关的分布中采集数据？</p>
+<p>重要性采样就是为了从一个新的分布中采样来替换旧的分布</p>
+<h2 id="2-importance-sampling">2 Importance Sampling</h2>
+<p>对于一个分布<span class="katex-inline">$P(X)$</span>，它的期望值可以这样计算：</p>
+<div class="katex-display-block">$$
+\begin{aligned} E_{x\sim p(x)}[f(x)] &amp; = \int p(x)f(x) dx \\ &amp; = \int q(x)\frac{p(x)}{q(x)}f(x) dx \\ &amp; = E_{x\sim q(x)}[\frac{p(x)}{q(x)}f(x)] \end{aligned}
+$$</div>
+<p>不难发现，当从分布<span class="katex-inline">$q(X)$</span>中采样，只要额外计算一个分式修正量(也称为重要性权重)即可。但是这里的分布<span class="katex-inline">$q(X)$</span>并不是随便选择的，它需要至少符合下面的条件，才能保证期望的相等(无偏性)。</p>
+<ol>
+<li>支撑集覆盖(support coverage)：对于所有<span class="katex-inline">$p(x) &gt; 0$</span>的地方，都有<span class="katex-inline">$q(x)&gt;0$</span>。否则某些区域将无法采样到，也就没法准确计算期望     ps: 积分区域的完整性</li>
+<li>权重可计算且有限(Weight Computability and Finite Expectation)。</li>
+</ol>
+<p>什么样的<span class="katex-inline">$q(x)$</span>才算一个好的分布? 在无偏的背景下考虑方差，方差应该也要尽可能一致。</p>
+<div class="katex-display-block">$$
+\begin{aligned} Var_{x\sim p(x)}(f(x)) = E_{p}[f^{2}(x)]-E_{p}^{2}[f(x)] \\ Var_{x\sim q(x)}(\frac{p(x)}{q(x)}f(x)) = E_{p}[\frac{p(x)}{q(x)}f^{2}(x)]-E_{p}^{2}[f(x)] \end{aligned}
+$$</div>
+<p>所以，只有当<span class="katex-inline">$p(x)$</span>和<span class="katex-inline">$q(x)$</span>尽可能一致的时候(分布相似，有点像废话)方差的差距才会比较小。</p>
+<h2 id="3-off-policy">3 Off-policy</h2>
+<p>既然可以用一个新的分布采样原来的分布，那么我们就可以收集一次数据，更新多次模型参数。新的梯度如下：</p>
+<div class="katex-display-block">$$
+\begin{aligned} \mathbb{E}_{(s_{t},a_{t})\sim \pi _{\theta ^{′}}}[\frac{p_{\theta }(s_{t},a_{t})}{p_{\theta ^{′}}(s_{t},a_{t})}A^{\theta ^{′}}(s_{t},a_{t})\cdot \nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t})] \\ = \mathbb{E}_{(s_{t},a_{t})\sim \pi _{\theta ^{′}}}[\frac{p_{\theta }(a_{t}|s_{t})p_{\theta }(s_{t})}{p_{\theta ^{′}}(a_{t}|s_{t})p_{\theta ^{′}}(s_{t})}A^{\theta ^{′}}(s_{t},a_{t})\cdot \nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t})] \\ = \mathbb{E}_{(s_{t},a_{t})\sim \pi _{\theta ^{′}}}[\frac{p_{\theta }(a_{t}|s_{t})}{p_{\theta ^{′}}(a_{t}|s_{t})}A^{\theta ^{′}}(s_{t},a_{t})\cdot \nabla _{\theta }\mathrm{log}⁡p(a_{t}|s_{t})] \end{aligned}
+$$</div>
+<p>此时的目标函数变为：</p>
+<div class="katex-display-block">$$
+\mathcal{J}^{\theta ^{′}}(\theta ) = E_{(s_{t},a_{t})\sim \pi _{\theta ^{′}}}[\frac{p_{\theta }(a_{t}|s_{t})}{p_{\theta ^{′}}(a_{t}|s_{t})}A^{\theta ^{′}}(s_{t},a_{t})]
+$$</div>
+<p>这时候我们需要约束学习的模型参数和采样的模型参数差距不能特别大，为此一个直觉的想法时，在目标函数上增加一项KL散度，使得两个参数下的策略空间的分布相似。这就是<strong>近端策略梯度优化</strong>：</p>
+<div class="katex-display-block">$$
+\mathcal{J}_{PPO}^{\theta ^{′}}(\theta ) = E_{(s_{t},a_{t})\sim \pi _{\theta ^{′}}}[\frac{p_{\theta }(a_{t}|s_{t})}{p_{\theta ^{′}}(a_{t}|s_{t})}A^{\theta ^{′}}(s_{t},a_{t})]-\beta KL(\theta ,\theta ^{′})
+$$</div>
+<p>自适应调整<span class="katex-inline">$\beta$</span>：</p>
+<ul>
+<li><span class="katex-inline">$\text{if } KL(\theta,\theta^{\prime}) &gt; KL_{max}$</span>，增大<span class="katex-inline">$\beta$</span></li>
+<li><span class="katex-inline">$\text{if } KL(\theta,\theta^{\prime}) &lt; KL_{min}$</span>，减小<span class="katex-inline">$\beta$</span></li>
+</ul>
+<p>事实上这个KL也不是很好算，如何避免计算？</p>
+<div class="katex-display-block">$$
+\mathcal{J}_{PPO2}^{\theta ^{′}}(\theta )\approx E_{(s_{t},a_{t})\sim \pi _{\theta ^{′}}}[\min (\frac{p_{\theta }(a_{t}|s_{t})}{p_{\theta ^{′}}(a_{t}|s_{t})}A^{\theta ^{′}}(s_{t},a_{t}),clip(\frac{p_{\theta }(a_{t}|s_{t})}{p_{\theta ^{′}}(a_{t}|s_{t})},1-\epsilon ,1+\epsilon )A^{\theta ^{′}}(s_{t},a_{t}))]
+$$</div>
+<p><img alt="image-20250224205241119" src="importance_sampling.assets/image-20250224205241119.png" /></p>
+          </div>
 
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
+          <div class="tag-widget post-tag-container mb-5 mt-5">
+            <div class="tagcloud">
+              <a href="../../../blog.html?tag=ml" class="tag-cloud-link">ML</a>
+              <a href="../../../blog.html?tag=reinforcement_learning" class="tag-cloud-link">Reinforcement Learning</a>
+              <a href="../../../blog.html?tag=importance_sampling" class="tag-cloud-link">Importance Sampling</a>
+            </div>
+          </div>
+        </article>
+      </div>
+<div class="col-lg-4 sidebar ftco-animate bg-light">
+  <div class="sidebar-box">
+    <div class="project-note">
+      <h3 class="sidebar-heading">Blog Workflow</h3>
+      <p>These pages are generated from Markdown with front matter, while keeping the current site style.</p>
+    </div>
+  </div>
 
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Categories</h3>
+    <ul class="categories">
+      <li><a href="../../../blog.html?category=ml">ML <span>(1)</span></a></li>
+      <li><a href="../../../blog.html?category=math">Math <span>(2)</span></a></li>
+    </ul>
+  </div>
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.timepicker.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>-->
-	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
-	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Recent Posts</h3>
+    <div class="block-21 mb-4 d-flex">
+      <a class="blog-img mr-4" href="../../../blog/ml/reinforcement_learning/importance_sampling.html" style="background-image: url(../../../images/blog/category_cover/ai.jpg);"></a>
+      <div class="text">
+        <h3 class="heading"><a href="../../../blog/ml/reinforcement_learning/importance_sampling.html">强化学习 - 重要性采样及应用</a></h3>
+        <div class="meta">
+          <div><a href="../../../blog/ml/reinforcement_learning/importance_sampling.html"><span class="icon-calendar"></span> Feb 24, 2025</a></div>
+          <div><a href="../../../blog.html?category=ml"><span class="icon-folder-o"></span> ML</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-21 mb-4 d-flex">
+      <a class="blog-img mr-4" href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html" style="background-image: url(../../../images/blog/category_cover/math.jpg);"></a>
+      <div class="text">
+        <h3 class="heading"><a href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html">信息论 (二)</a></h3>
+        <div class="meta">
+          <div><a href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html"><span class="icon-calendar"></span> Nov 27, 2023</a></div>
+          <div><a href="../../../blog.html?category=math"><span class="icon-folder-o"></span> Math</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-21 mb-4 d-flex">
+      <a class="blog-img mr-4" href="../../../blog/math/information_theory/information_theory_2023_11_17.html" style="background-image: url(../../../images/blog/category_cover/math.jpg);"></a>
+      <div class="text">
+        <h3 class="heading"><a href="../../../blog/math/information_theory/information_theory_2023_11_17.html">信息论 (一)</a></h3>
+        <div class="meta">
+          <div><a href="../../../blog/math/information_theory/information_theory_2023_11_17.html"><span class="icon-calendar"></span> Nov 17, 2023</a></div>
+          <div><a href="../../../blog.html?category=math"><span class="icon-folder-o"></span> Math</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</body>
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Tag Cloud</h3>
+    <div class="tagcloud">
+      <a href="../../../blog.html?tag=divergence" class="tag-cloud-link">Divergence</a>
+      <a href="../../../blog.html?tag=importance_sampling" class="tag-cloud-link">Importance Sampling</a>
+      <a href="../../../blog.html?tag=information_theory" class="tag-cloud-link">Information Theory</a>
+      <a href="../../../blog.html?tag=ml" class="tag-cloud-link">ML</a>
+      <a href="../../../blog.html?tag=math" class="tag-cloud-link">Math</a>
+      <a href="../../../blog.html?tag=notes" class="tag-cloud-link">Notes</a>
+      <a href="../../../blog.html?tag=reinforcement_learning" class="tag-cloud-link">Reinforcement Learning</a>
+    </div>
+  </div>
 
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Archives</h3>
+    <ul class="categories">
+      <li><a href="../../../blog.html?archive=2025-02">February 2025 <span>(1)</span></a></li>
+      <li><a href="../../../blog.html?archive=2023-11">November 2023 <span>(2)</span></a></li>
+    </ul>
+  </div>
+</div>    </div>
+  </div>
+</section>
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+  <div class="container px-md-5">
+    <div class="row mb-5">
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4 ml-md-4">
+          <h2 class="ftco-heading-2">Recent Writing</h2>
+          <ul class="list-unstyled categories">
+            <li><a href="../../../blog/ml/reinforcement_learning/importance_sampling.html">强化学习 - 重要性采样及应用 <span>Feb 24, 2025</span></a></li>
+            <li><a href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html">信息论 (二) <span>Nov 27, 2023</span></a></li>
+            <li><a href="../../../blog/math/information_theory/information_theory_2023_11_17.html">信息论 (一) <span>Nov 17, 2023</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Archives</h2>
+          <ul class="list-unstyled categories">
+            <li><a href="../../../blog.html">February 2025 <span>(1)</span></a></li>
+            <li><a href="../../../blog.html">November 2023 <span>(2)</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Have a Question?</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><span class="icon icon-map-marker"></span><span class="text">Wuhan / Shanghai / On the web</span></li>
+              <li><a href="../../../contact.html"><span class="icon icon-envelope"></span><span class="text">Reach out from the contact page</span></a></li>
+              <li><a href="../../../blog.html"><span class="icon icon-book"></span><span class="text">Browse all writing</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is based on <a href="https://colorlib.com" target="_blank" rel="noreferrer">Colorlib</a></p>
+      </div>
+    </div>
+  </div>
+</footer>      </div>
+    </div>
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"></circle><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"></circle></svg></div>
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="../../../js/popper.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../../js/jquery.easing.1.3.js"></script>
+    <script src="../../../js/jquery.waypoints.min.js"></script>
+    <script src="../../../js/jquery.stellar.min.js"></script>
+    <script src="../../../js/owl.carousel.min.js"></script>
+    <script src="../../../js/jquery.magnific-popup.min.js"></script>
+    <script src="../../../js/aos.js"></script>
+    <script src="../../../js/jquery.animateNumber.min.js"></script>
+    <script src="../../../js/bootstrap-datepicker.js"></script>
+    <script src="../../../js/scrollax.min.js"></script>
+    <script src="../../../js/google-map.js"></script>
+    <script src="../../../js/main.js"></script>
+    <script>
+      hljs.highlightAll();
+
+      // KaTeX auto-render initializer
+      function initKaTeX() {
+        if (typeof renderMathInElement === "function") {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "\\[", right: "\\]", display: true },
+              { left: "$", right: "$", display: false },
+              { left: "\\(", right: "\\)", display: false }
+            ],
+            throwOnError: false,
+            ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+          });
+        } else {
+          setTimeout(initKaTeX, 60);
+        }
+      }
+      initKaTeX();
+
+      // Code block enhancement: Language badges & Copy button
+      document.querySelectorAll(".blog-markdown pre").forEach(function(pre) {
+        var code = pre.querySelector("code");
+        var container = document.createElement("div");
+        container.className = "code-block-wrapper";
+        pre.parentNode.insertBefore(container, pre);
+        container.appendChild(pre);
+
+        var header = document.createElement("div");
+        header.className = "code-block-header";
+
+        var lang = "CODE";
+        if (code) {
+          code.classList.forEach(function(cls) {
+            if (cls.startsWith("language-") || cls.startsWith("lang-")) {
+              lang = cls.replace(/^language-|^lang-/, "").toUpperCase();
+            }
+          });
+        }
+        var langLabel = document.createElement("span");
+        langLabel.className = "code-lang-label";
+        langLabel.textContent = lang;
+        header.appendChild(langLabel);
+
+        var copyBtn = document.createElement("button");
+        copyBtn.className = "code-copy-btn";
+        copyBtn.type = "button";
+        copyBtn.textContent = "Copy";
+        copyBtn.addEventListener("click", function() {
+          var textToCopy = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            copyBtn.textContent = "Copied!";
+            copyBtn.classList.add("copied");
+            setTimeout(function() {
+              copyBtn.textContent = "Copy";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          }).catch(function() {
+            copyBtn.textContent = "Failed";
+          });
+        });
+        header.appendChild(copyBtn);
+        container.insertBefore(header, pre);
+      });
+
+      function resizeEmbeddedFrame(frame) {
+        try {
+          const doc = frame.contentWindow.document;
+          const body = doc.body;
+          const html = doc.documentElement;
+          const nextHeight = Math.max(body.scrollHeight, html.scrollHeight);
+          if (nextHeight) {
+            frame.style.height = nextHeight + "px";
+          }
+        } catch (error) {
+          frame.classList.add("dynamic-iframe-fallback");
+        }
+      }
+
+      document.querySelectorAll("iframe[data-auto-height='true']").forEach((frame) => {
+        frame.addEventListener("load", () => resizeEmbeddedFrame(frame));
+      });
+    </script>
+  </body>
 </html>

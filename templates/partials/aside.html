@@ -1,0 +1,18 @@
+<aside id="colorlib-aside" role="complementary" class="js-fullheight text-center">
+  <h1 id="colorlib-logo"><a href="{{ root_prefix }}index.html"><span class="img" style="background-image: url({{ root_prefix }}images/profile_photo/comic.jpg);"></span>XiaoFu Chen</a></h1>
+  <nav id="colorlib-main-menu" role="navigation">
+    <ul>
+      <li><a href="{{ root_prefix }}index.html">Home</a></li>
+      <li><a href="{{ root_prefix }}collection.html">Collection</a></li>
+      <li><a href="{{ root_prefix }}about.html">About Me</a></li>
+      <li><a href="{{ root_prefix }}services.html">Biography</a></li>
+      <li class="{% if page_type == 'blog' or page_type == 'post' %}colorlib-active{% endif %}"><a href="{{ root_prefix }}blog.html">Blog</a></li>
+      <li><a href="{{ root_prefix }}contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="colorlib-footer">
+    <h3>Notes & Writing</h3>
+    <p class="mb-0">Research notes, personal essays, and lightweight publishing from Markdown sources.</p>
+  </div>
+</aside>

@@ -1,0 +1,43 @@
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+  <div class="container px-md-5">
+    <div class="row mb-5">
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4 ml-md-4">
+          <h2 class="ftco-heading-2">Recent Writing</h2>
+          <ul class="list-unstyled categories">
+            {% for post in site.recent_posts %}
+            <li><a href="{{ root_prefix }}{{ post.permalink }}">{{ post.title }} <span>{{ post.display_date }}</span></a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Archives</h2>
+          <ul class="list-unstyled categories">
+            {% for archive in site.archives[:5] %}
+            <li><a href="{{ root_prefix }}blog.html">{{ archive.label }} <span>({{ archive.count }})</span></a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Have a Question?</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><span class="icon icon-map-marker"></span><span class="text">Wuhan / Shanghai / On the web</span></li>
+              <li><a href="{{ root_prefix }}contact.html"><span class="icon icon-envelope"></span><span class="text">Reach out from the contact page</span></a></li>
+              <li><a href="{{ root_prefix }}blog.html"><span class="icon icon-book"></span><span class="text">Browse all writing</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is based on <a href="https://colorlib.com" target="_blank" rel="noreferrer">Colorlib</a></p>
+      </div>
+    </div>
+  </div>
+</footer>

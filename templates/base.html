@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ page_title }}</title>
+    <link rel="shortcut icon" href="{{ root_prefix }}images/profile_photo/logo.jpg" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ root_prefix }}css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/animate.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/owl.carousel.min.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/magnific-popup.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/aos.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/jquery.timepicker.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/flaticon.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/icomoon.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/github.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/md.css">
+    <link rel="stylesheet" href="{{ root_prefix }}css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+    <script src="{{ root_prefix }}js/highlight.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="colorlib-page">
+      <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+      {% include "partials/aside.html" %}
+      <div id="colorlib-main">
+        {% block content %}{% endblock %}
+        {% include "partials/footer.html" %}
+      </div>
+    </div>
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"></circle><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"></circle></svg></div>
+
+    <script src="{{ root_prefix }}js/jquery.min.js"></script>
+    <script src="{{ root_prefix }}js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="{{ root_prefix }}js/popper.min.js"></script>
+    <script src="{{ root_prefix }}js/bootstrap.min.js"></script>
+    <script src="{{ root_prefix }}js/jquery.easing.1.3.js"></script>
+    <script src="{{ root_prefix }}js/jquery.waypoints.min.js"></script>
+    <script src="{{ root_prefix }}js/jquery.stellar.min.js"></script>
+    <script src="{{ root_prefix }}js/owl.carousel.min.js"></script>
+    <script src="{{ root_prefix }}js/jquery.magnific-popup.min.js"></script>
+    <script src="{{ root_prefix }}js/aos.js"></script>
+    <script src="{{ root_prefix }}js/jquery.animateNumber.min.js"></script>
+    <script src="{{ root_prefix }}js/bootstrap-datepicker.js"></script>
+    <script src="{{ root_prefix }}js/scrollax.min.js"></script>
+    <script src="{{ root_prefix }}js/google-map.js"></script>
+    <script src="{{ root_prefix }}js/main.js"></script>
+    <script>
+      hljs.highlightAll();
+
+      // KaTeX auto-render initializer
+      function initKaTeX() {
+        if (typeof renderMathInElement === "function") {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "\\[", right: "\\]", display: true },
+              { left: "$", right: "$", display: false },
+              { left: "\\(", right: "\\)", display: false }
+            ],
+            throwOnError: false,
+            ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+          });
+        } else {
+          setTimeout(initKaTeX, 60);
+        }
+      }
+      initKaTeX();
+
+      // Code block enhancement: Language badges & Copy button
+      document.querySelectorAll(".blog-markdown pre").forEach(function(pre) {
+        var code = pre.querySelector("code");
+        var container = document.createElement("div");
+        container.className = "code-block-wrapper";
+        pre.parentNode.insertBefore(container, pre);
+        container.appendChild(pre);
+
+        var header = document.createElement("div");
+        header.className = "code-block-header";
+
+        var lang = "CODE";
+        if (code) {
+          code.classList.forEach(function(cls) {
+            if (cls.startsWith("language-") || cls.startsWith("lang-")) {
+              lang = cls.replace(/^language-|^lang-/, "").toUpperCase();
+            }
+          });
+        }
+        var langLabel = document.createElement("span");
+        langLabel.className = "code-lang-label";
+        langLabel.textContent = lang;
+        header.appendChild(langLabel);
+
+        var copyBtn = document.createElement("button");
+        copyBtn.className = "code-copy-btn";
+        copyBtn.type = "button";
+        copyBtn.textContent = "Copy";
+        copyBtn.addEventListener("click", function() {
+          var textToCopy = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            copyBtn.textContent = "Copied!";
+            copyBtn.classList.add("copied");
+            setTimeout(function() {
+              copyBtn.textContent = "Copy";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          }).catch(function() {
+            copyBtn.textContent = "Failed";
+          });
+        });
+        header.appendChild(copyBtn);
+        container.insertBefore(header, pre);
+      });
+
+      function resizeEmbeddedFrame(frame) {
+        try {
+          const doc = frame.contentWindow.document;
+          const body = doc.body;
+          const html = doc.documentElement;
+          const nextHeight = Math.max(body.scrollHeight, html.scrollHeight);
+          if (nextHeight) {
+            frame.style.height = nextHeight + "px";
+          }
+        } catch (error) {
+          frame.classList.add("dynamic-iframe-fallback");
+        }
+      }
+
+      document.querySelectorAll("iframe[data-auto-height='true']").forEach((frame) => {
+        frame.addEventListener("load", () => resizeEmbeddedFrame(frame));
+      });
+    </script>
+  </body>
+</html>

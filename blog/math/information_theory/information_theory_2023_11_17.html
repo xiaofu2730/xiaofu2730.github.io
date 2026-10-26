@@ -1,319 +1,667 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>信息论 (一) | XiaoFu&#39;s HomePage</title>
+    <link rel="shortcut icon" href="../../../images/profile_photo/logo.jpg" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-    <base href="../../../" target="_blank">
-	<title>XiaoFu's HomePage</title>
-	<link rel="shortcut icon" href="images/profile_photo/logo.jpg" type="image/x-icon">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/github.css">
-	<script src="js/highlight.min.js"></script>
-	<script>hljs.highlightAll();</script>
+    <link rel="stylesheet" href="../../../css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../../../css/animate.css">
+    <link rel="stylesheet" href="../../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../../css/magnific-popup.css">
+    <link rel="stylesheet" href="../../../css/aos.css">
+    <link rel="stylesheet" href="../../../css/ionicons.min.css">
+    <link rel="stylesheet" href="../../../css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../../../css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../../../css/flaticon.css">
+    <link rel="stylesheet" href="../../../css/icomoon.css">
+    <link rel="stylesheet" href="../../../css/github.css">
+    <link rel="stylesheet" href="../../../css/md.css">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+    <script src="../../../js/highlight.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="colorlib-page">
+      <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+<aside id="colorlib-aside" role="complementary" class="js-fullheight text-center">
+  <h1 id="colorlib-logo"><a href="../../../index.html"><span class="img" style="background-image: url(../../../images/profile_photo/comic.jpg);"></span>XiaoFu Chen</a></h1>
+  <nav id="colorlib-main-menu" role="navigation">
+    <ul>
+      <li><a href="../../../index.html">Home</a></li>
+      <li><a href="../../../collection.html">Collection</a></li>
+      <li><a href="../../../about.html">About Me</a></li>
+      <li><a href="../../../services.html">Biography</a></li>
+      <li class="colorlib-active"><a href="../../../blog.html">Blog</a></li>
+      <li><a href="../../../contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-	<link rel="stylesheet" href="css/md.css">
+  <div class="colorlib-footer">
+    <h3>Notes & Writing</h3>
+    <p class="mb-0">Research notes, personal essays, and lightweight publishing from Markdown sources.</p>
+  </div>
+</aside>      <div id="colorlib-main">
+<section class="ftco-section ftco-bread">
+  <div class="container">
+    <div class="row no-gutters slider-text justify-content-center align-items-center">
+      <div class="col-md-8 ftco-animate">
+        <p class="breadcrumbs">
+          <span class="mr-2"><a href="../../../index.html">Home</a></span>
+          <span class="mr-2">
+            <a href="../../../blog.html">Blog</a>
+          </span>
+          <span class="mr-2">
+            Math
+          </span>
+          <span class="mr-2">
+            Information Theory
+          </span>
+          <span>信息论 (一)</span>
+        </p>
+        <h1 class="bread">Information Theory</h1>
+      </div>
+    </div>
+  </div>
+</section>
 
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet">
+<section class="ftco-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 ftco-animate">
+        <article class="generated-post">
+          <h2 class="mb-3 font-weight-bold">信息论 (一)</h2>
+          <p class="generated-post-subtitle">Self-information and entropy notes</p>
 
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
-
-	<link rel="stylesheet" href="css/aos.css">
-
-	<link rel="stylesheet" href="css/ionicons.min.css">
-
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="css/jquery.timepicker.css">
-
-
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-
-	<div id="colorlib-page">
-		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-        <script src="./js/page_aside.js"></script>
-		<div id="colorlib-main">
-			<section class="ftco-section ftco-bread">
-				<div class="container">
-					<div class="row no-gutters slider-text justify-content-center align-items-center">
-						<div class="col-md-8 ftco-animate">
-							<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span
-									class="mr-2"><a href="blog.html">Blog</a></span> <span class="mr-2"><a>Math</a></span> <span class="mr-2">Information Theory</span></p>
-							<h1 class="bread">Information Theory</h1>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section class="ftco-section">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 ftco-animate">
-							<h2 style="text-align: center;" class="mb-3 font-weight-bold">信息论 (一)</h2>
-							<span id="busuanzi_container_site_uv">
-								<center> Halo! 你是第<span id="busuanzi_value_page_pv"></span>位来访的朋友 </center>
-							</span>
-                            <p></p>
-							<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=70% 
-								src="./lib/html/math/information_theory/Self_information_final.html"></iframe>
-							<div class="tag-widget post-tag-container mb-5 mt-5">
-								<div class="tagcloud">
-									<a href="#" class="tag-cloud-link">Math</a>
-									<a href="#" class="tag-cloud-link">Python</a>
-									<a href="#" class="tag-cloud-link">AI</a>
-									<a href="#" class="tag-cloud-link">Travel</a>
-								</div>
-							</div>
-							<!-- <div class="comment-form-wrap pt-5">
-								<h3 class="mb-5">Leave a comment</h3>
-								<form action="#" class="p-3 p-md-5 bg-light">
-									<div class="form-group">
-										<label for="name">Name *</label>
-										<input type="text" class="form-control" id="name">
-									</div>
-									<div class="form-group">
-										<label for="email">Email *</label>
-										<input type="email" class="form-control" id="email">
-									</div>
-									<div class="form-group">
-										<label for="website">Website</label>
-										<input type="url" class="form-control" id="website">
-									</div>
-
-									<div class="form-group">
-										<label for="message">Message</label>
-										<textarea name="" id="message" cols="30" rows="10"
-											class="form-control"></textarea>
-									</div>
-									<div class="form-group">
-										<input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
-									</div>
-
-								</form>
-							</div> -->
-							<!-- <div class="pt-5 mt-5"> 
-							</div>
-							<div class="pt-5 mt-5"> 
-							</div>
-							<div class="pt-5 mt-5"> 
-							</div>
-							<div class="pt-5 mt-5"> 
-							</div> -->
-						</div> <!-- .col-md-8 -->
-						<div class="col-lg-4 sidebar ftco-animate bg-light">
-							<div class="sidebar-box">
-								<form action="#" class="search-form">
-									<div class="form-group">
-										<span class="icon icon-search"></span>
-										<input type="text" class="form-control"
-											placeholder="Type a keyword and hit enter">
-									</div>
-								</form>
-							</div>
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Categories</h3>
-								<ul class="categories">
-									<li><a href="#">Fashion <span>(6)</span></a></li>
-									<li><a href="#">Technology <span>(8)</span></a></li>
-									<li><a href="#">Travel <span>(2)</span></a></li>
-									<li><a href="#">Food <span>(2)</span></a></li>
-									<li><a href="#">Photography <span>(7)</span></a></li>
-								</ul>
-							</div>
-
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Popular Articles</h3>
-								<div class="block-21 mb-4 d-flex">
-									<a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-									<div class="text">
-										<h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-												control</a></h3>
-										<div class="meta">
-											<div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2018</a></div>
-											<div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-											<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-										</div>
-									</div>
-								</div>
-								<div class="block-21 mb-4 d-flex">
-									<a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-									<div class="text">
-										<h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-												control</a></h3>
-										<div class="meta">
-											<div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2018</a></div>
-											<div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-											<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-										</div>
-									</div>
-								</div>
-								<div class="block-21 mb-4 d-flex">
-									<a class="blog-img mr-4" style="background-image: url(images/image_3.jpg);"></a>
-									<div class="text">
-										<h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-												control</a></h3>
-										<div class="meta">
-											<div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2018</a></div>
-											<div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-											<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Tag Cloud</h3>
-								<ul class="tagcloud">
-									<a href="#" class="tag-cloud-link">animals</a>
-									<a href="#" class="tag-cloud-link">human</a>
-									<a href="#" class="tag-cloud-link">people</a>
-									<a href="#" class="tag-cloud-link">cat</a>
-									<a href="#" class="tag-cloud-link">dog</a>
-									<a href="#" class="tag-cloud-link">nature</a>
-									<a href="#" class="tag-cloud-link">leaves</a>
-									<a href="#" class="tag-cloud-link">food</a>
-								</ul>
-							</div>
-
-							<div class="sidebar-box subs-wrap img" style="background-image: url(images/bg_1.jpg);">
-								<div class="overlay"></div>
-								<h3 class="mb-4 sidebar-heading">Newsletter</h3>
-								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
-								</p>
-								<form action="#" class="subscribe-form">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Email Address">
-										<input type="submit" value="Subscribe" class="mt-2 btn btn-white submit">
-									</div>
-								</form>
-							</div>
-
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Archives</h3>
-								<ul class="categories">
-									<li><a href="#">October 2018 <span>(10)</span></a></li>
-									<li><a href="#">September 2018 <span>(6)</span></a></li>
-									<li><a href="#">August 2018 <span>(8)</span></a></li>
-									<li><a href="#">July 2018 <span>(2)</span></a></li>
-									<li><a href="#">June 2018 <span>(7)</span></a></li>
-									<li><a href="#">May 2018 <span>(5)</span></a></li>
-								</ul>
-							</div>
+          <div class="generated-post-meta">
+            <span>Nov 17, 2023</span>
+            <span><a href="../../../blog.html?category=math">Math</a></span>
+            <span>Information Theory</span>
+            <span>约 3438 字</span>
+            <span>预计阅读 11 分钟</span>
+          </div>
 
 
-							<div class="sidebar-box ftco-animate">
-								<h3 class="sidebar-heading">Paragraph</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem
-									necessitatibus voluptate quod mollitia delectus aut.</p>
-							</div>
-						</div><!-- END COL -->
-					</div>
-				</div>
-			</section>
-			<footer class="ftco-footer ftco-bg-dark ftco-section">
-				<div class="container px-md-5">
-					<div class="row mb-5">
-						<div class="col-md">
-							<div class="ftco-footer-widget mb-4 ml-md-4">
-								<h2 class="ftco-heading-2">Recent Photos</h2>
-								<ul class="list-unstyled photo">
-									<li><a href="#" class="img" style="background-image: url(images/image_1.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_2.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_3.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_4.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_5.jpg);"></a>
-									</li>
-									<li><a href="#" class="img" style="background-image: url(images/image_6.jpg);"></a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md">
-							<div class="ftco-footer-widget mb-4">
-								<h2 class="ftco-heading-2">Archives</h2>
-								<ul class="list-unstyled categories">
-									<li><a href="#">November 2018 <span>(105)</span></a></li>
-									<li><a href="#">October 2018 <span>(212)</span></a></li>
-									<li><a href="#">September 2018 <span>(150)</span></a></li>
-									<li><a href="#">August 2018 <span>(100)</span></a></li>
-									<li><a href="#">July 2018 <span>(200)</span></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md">
-							<div class="ftco-footer-widget mb-4">
-								<h2 class="ftco-heading-2">Have a Questions?</h2>
-								<div class="block-23 mb-3">
-									<ul>
-										<li><span class="icon icon-map-marker"></span><span class="text">203 Fake St.
-												Mountain View, San Francisco, California, USA</span></li>
-										<li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392
-													3929 210</span></a></li>
-										<li><a href="#"><span class="icon icon-envelope"></span><span
-													class="text">info@yourdomain.com</span></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
+          <div class="md-toc-card">
+            <h3>On This Page</h3>
+            <ul>
+              <li class="toc-level-1"><a href="#self-information-inline_math_51">※ Self-Information $I(n)$</a></li>
+              <li class="toc-level-2"><a href="#1">1 数学描述</a></li>
+              <li class="toc-level-3"><a href="#cond1">Cond1</a></li>
+              <li class="toc-level-3"><a href="#cond2">Cond2</a></li>
+              <li class="toc-level-3"><a href="#cond3">Cond3</a></li>
+              <li class="toc-level-3"><a href="#cond4">Cond4</a></li>
+              <li class="toc-level-2"><a href="#2">2 数学证明</a></li>
+              <li class="toc-level-3"><a href="#21">2.1 提出命题</a></li>
+              <li class="toc-level-3"><a href="#22">2.2 证明过程</a></li>
+              <li class="toc-level-2"><a href="#_1">补充</a></li>
+              <li class="toc-level-1"><a href="#entrophy">※ Entrophy</a></li>
+              <li class="toc-level-2"><a href="#1_1">1 熵的定义</a></li>
+              <li class="toc-level-2"><a href="#2_1">2 熵的属性</a></li>
+              <li class="toc-level-3"><a href="#21-fundamental-inequalityfi">2.1 Fundamental Inequality(FI)</a></li>
+              <li class="toc-level-3"><a href="#22-nonenegativity">2.2 Nonenegativity</a></li>
+              <li class="toc-level-3"><a href="#23-upper-bound-on-entropy">2.3 Upper bound on entropy</a></li>
+              <li class="toc-level-3"><a href="#24-log-sum-inequlity">2.4 Log-sum inequlity</a></li>
+              <li class="toc-level-2"><a href="#3">3 联合熵和条件熵</a></li>
+              <li class="toc-level-3"><a href="#31">3.1 二维元素事件的自信息</a></li>
+              <li class="toc-level-3"><a href="#32">3.2 联合熵的定义</a></li>
+              <li class="toc-level-3"><a href="#33">3.3 条件熵的定义</a></li>
+              <li class="toc-level-3"><a href="#34">3.4 定理和推论</a></li>
+              <li class="toc-level-2"><a href="#4">4 联合熵和条件熵的属性</a></li>
+              <li class="toc-level-3"><a href="#41-conditioning-never-increases-entrophy">4.1 条件不增性 Conditioning never increases entrophy</a></li>
+              <li class="toc-level-3"><a href="#42-additivive-for-independent-random-variables">4.2 独立可加性 Additivive for independent random variables</a></li>
+              <li class="toc-level-3"><a href="#43-conditional-entrophy-is-lower-additive">4.3 条件不等式 Conditional entrophy is lower additive</a></li>
+              <li class="toc-level-1"><a href="#mutual-information">※ Mutual Information</a></li>
+              <li class="toc-level-2"><a href="#1_2">1 互信息的定义</a></li>
+              <li class="toc-level-2"><a href="#2_2">2 互信息的属性</a></li>
+              <li class="toc-level-3"><a href="#21_1">2.1 互信息的等价表达式</a></li>
+              <li class="toc-level-3"><a href="#22_1">2.2 互信息不大于单随机变量的熵</a></li>
+              <li class="toc-level-3"><a href="#23">2.3 互信息非负性</a></li>
+              <li class="toc-level-3"><a href="#24">2.4 互信息的上界</a></li>
+              <li class="toc-level-2"><a href="#3_1">3 条件互信息</a></li>
+              <li class="toc-level-3"><a href="#31_1">3.1 定义</a></li>
+              <li class="toc-level-3"><a href="#32_1">3.2 联合互信息和互信息的链式法则</a></li>
+              <li class="toc-level-1"><a href="#_7">参考链接🔗</a></li>
+            </ul>
+          </div>
 
-							<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>document.write(new Date().getFullYear());</script> All rights reserved | This
-								template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-					</div>
-				</div>
-			</footer>
-		</div><!-- END COLORLIB-MAIN -->
-	</div><!-- END COLORLIB-PAGE -->
+          <div id="write" class="blog-markdown">
+            <h1 id="self-information-inline_math_51">※  Self-Information <span class="katex-inline">$I(n)$</span></h1>
+<p>我们要定义一个函数(或者说一个事件新的属性，称为自信息)，该函数能够衡量当一件事情在发生之前事件的不确定性，如此我们首先达成以下共识：</p>
+<ol>
+<li>事件需要依据它的固有属性数字化，这里我们使用事件发生的概率</li>
+<li>当一个事件发生的概率越大，所含信息量越少，概率为1时候，信息量为0。</li>
+<li>独立事件同时发生时候，信息量是各个独立事件信息量之和</li>
+<li>事件发生概率的微小变动会影响自信息</li>
+</ol>
+<p>注意，这里的信息量是一种信息容量，就像kg一样刻画物体的质量，但是不同的是，信息容量表示的内在含义是指数级的，如3bit相对于1bit，数字上是3倍，但是3bit可以刻画的状态数却是四倍于1bit。我们可以粗浅理解这里的信息量类似于比特数，它是一种新的量纲!</p>
+<h2 id="1">1  数学描述</h2>
+<h3 id="cond1">Cond1</h3>
+<p>设事件 <span class="katex-inline">$E$</span> 属于一个给定的事件集合(空间)，其发生概率为:</p>
+<div class="katex-display-block">$$
+\begin{aligned} P_{e}:= Pr(E) \\ 0\le P_{e}\le 1 \end{aligned}
+$$</div>
+<p>因此我们要找一个实函数，其性质如下:</p>
+<div class="katex-display-block">$$
+I(x),\quad x\in [0,1]
+$$</div>
+<h3 id="cond2">Cond2</h3>
+<p>该函数是一个单调递减函数：</p>
+<div class="katex-display-block">$$
+\forall x_{i},x_{j}\in [0,1],\quad \text{if } x_{i}&lt;x_{j}\quad \text{then } I(x_{j})&lt;I(x_{i}) \tag{1-1}
+$$</div>
+<p>并且有一个固定点：</p>
+<div class="katex-display-block">$$
+I(1) = 0
+$$</div>
+<h3 id="cond3">Cond3</h3>
+<p>独立事件同时发生的概率等于各个事件发生概率之积，因此函数具有以下性质：</p>
+<div class="katex-display-block">$$
+I(p_{1}\times p_{2}) = I(p_{1})+I(p_{2}) \tag{1-2}
+$$</div>
+<h3 id="cond4">Cond4</h3>
+<p><span class="katex-inline">$I(x)$</span>是一个连续的函数</p>
+<h2 id="2">2  数学证明</h2>
+<h3 id="21">2.1  提出命题</h3>
+<p>满足上述四个条件的函数只能是：</p>
+<div class="katex-display-block">$$
+I(p) = -c\cdot log_{b}(p),\quad p\in (0,1] \tag{2-1}
+$$</div>
+<p>其中c是一个正实数，b是一个任何大于1的整数。</p>
+<h3 id="22">2.2  证明过程</h3>
+<h4 id="221-1">2.2.1  引理-1</h4>
+<p>先证明如下引理：对于<span class="katex-inline">$n=1,2,3,..$</span></p>
+<div class="katex-display-block">$$
+I(\frac{1}{n}) = -c\cdot log_{b}(\frac{1}{n}) \tag{2-2}
+$$</div>
+<p><strong>证明：</strong></p>
+<p>当n=1时，根据Cond2，<span class="katex-inline">$左=I(1)=0$</span>，<span class="katex-inline">$右=-c \cdot log_b(1)=0=左$</span>，等式成立。</p>
+<p>当n&gt;1时，依据公式1-1以及公式1-2，知道当n&lt;m时，</p>
+<div class="katex-display-block">$$
+\begin{aligned} \frac{1}{m}&lt;\frac{1}{n} \implies I(\frac{1}{n})&lt;I(\frac{1}{m}) \\ I(\frac{1}{mn}) = I(\frac{1}{m})+I(\frac{1}{n}) \end{aligned}
+$$</div>
+<p>同时，依据公式1-2，不难推导出对于任意非负整数k，有：</p>
+<div class="katex-display-block">$$
+I(\frac{1}{n^{k}}) = k\cdot I(\frac{1}{n}) \tag{2-3}
+$$</div>
+<p>对于任意正整数r，一定有非负整数k：</p>
+<div class="katex-display-block">$$
+n^{k}\le 2^{r}&lt;n^{k+1}
+$$</div>
+<p>根据公式1-1和公式2-3以及<span class="katex-inline">$r&gt;0$</span>且<span class="katex-inline">$n&gt;1,I(\frac{1}{n})&gt;0$</span>：</p>
+<div class="katex-display-block">$$
+\begin{aligned}
+ \begin{aligned} I(\frac{1}{n^{k}})\le I(\frac{1}{2^{r}})&lt;I(\frac{1}{n^{k+1}}) \implies k\cdot I(\frac{1}{n})\le r\cdot I(\frac{1}{2})&lt;(k+1)\cdot I(\frac{1}{n}) \\ \implies \frac{k}{r}\le \frac{I(\frac{1}{2})}{I(\frac{1}{n})}&lt;\frac{k+1}{r}
+\end{aligned} \tag{2-4} \end{aligned}
+$$</div>
+<p>易知：</p>
+<div class="katex-display-block">$$
+log_{b}n^{k}\le log_{b}2^{r}\le log_{b}n^{k+1}\\text{if } f \frac{k}{r}\le \frac{log_{b}(2)}{log_{b}(n)}\le \frac{k+1}{r} \tag{2-5}
+$$</div>
+<p>综合公式2-4和公式2-5有：</p>
+<div class="katex-display-block">$$
+|\frac{log_{b}(2)}{log_{b}(n)}-\frac{I(1/2)}{I(1/n)}|&lt;\frac{1}{r}
+$$</div>
+<p>因为b也是常量，当n固定时候，<span class="katex-inline">$r \to \infty$</span>，可以知道：</p>
+<div class="katex-display-block">$$
+I(\frac{1}{n}) = -c\cdot log_{b}(n), c = \frac{I(1/2)}{log_{b}(2)}&gt;0
+$$</div>
+<p>引理-1得证。</p>
+<h4 id="222-2">2.2.2  引理-2</h4>
+<p>再证明如下引理：对于正有理数<span class="katex-inline">$0&lt;p&lt;1$</span>，有：</p>
+<div class="katex-display-block">$$
+I(p) = -c\cdot log_{b}(p)
+$$</div>
+<p>其中<span class="katex-inline">$c&gt;0$</span>是一个常数。</p>
+<p><strong>证明：</strong>因为p是一个正有理数，所以一定存在正整数r,s使得<span class="katex-inline">$p=r/s$</span>。</p>
+<p>由公式1-2知：</p>
+<div class="katex-display-block">$$
+\begin{aligned} I(\frac{1}{s}) = I(\frac{1}{r}\cdot \frac{r}{s}) = I(\frac{1}{r})+I(\frac{r}{s}) \\ \implies I(\frac{r}{s}) = I(\frac{1}{s})-I(\frac{1}{r}) \end{aligned}
+$$</div>
+<p>根据中间引理-1知：</p>
+<div class="katex-display-block">$$
+I(p) = I(\frac{r}{s}) = I(\frac{1}{s})-I(\frac{1}{r}) = c\cdot log_{b}(s)-c\cdot log_{b}(r) = -c\cdot log_{b}(p)
+$$</div>
+<p>所以中间引理-2得证。</p>
+<h4 id="223-3">2.2.3  引理-3</h4>
+<p>最后证明如下引理：</p>
+<div class="katex-display-block">$$
+I(p) = -c\cdot log_{b}(p), p\in (0,1]\text{函}\text{数}\text{连}\text{续}
+$$</div>
+<p>易知：</p>
+<div class="katex-display-block">$$
+I(p) = \lim _{a↓p a rational}I(a) = \lim _{b↑p b rational}I(b) = -c\cdot log_{b}(p)
+$$</div>
+<p>所以连续得证。</p>
+<p><strong>综合上述3个引理，原命题得证。</strong></p>
+<h2 id="_1">补充</h2>
+<p>我们通常将c设置为1，对于不同底数b，单位是不同的，b=2时，单位为bit，b=e也就是自然底数时，单位为nat</p>
+<h1 id="entrophy">※  Entrophy</h1>
+<p>自信息讨论的是一整个事件空间中<strong>某一个事件的属性</strong>，这个属性只依赖于事件发生的概率。</p>
+<p>可以这样理解：所谓自信息，香农提出的是概率性度量，香农认为，<strong>记录一个概率发生小的事件比概率发生大的事件需要更多的空间，因为一个人确定低概率事件发生所需要的不确定性代价更高</strong>。这符合直觉吗？联想一下哈夫曼编码，当我们给大概率事件赋予更少比特数时候，压缩率达到最高。</p>
+<h2 id="1_1">1  熵的定义</h2>
+<p>对于一个概率质量函数为<span class="katex-inline">$P_X(\cdot )$</span>离散随机变量<span class="katex-inline">$X$</span>，它的熵定义为：<span class="katex-inline">$H(X)$</span>或者<span class="katex-inline">$H(P_x)$</span>：</p>
+<div class="katex-display-block">$$
+H(X):= -\sum _{x\in \mathcal{X}}P_{X}(x)\cdot log_{2}P_{X}(x) (bits) \tag{1-1}
+$$</div>
+<p>其中<span class="katex-inline">$\mathcal{X}$</span>是随机变量<span class="katex-inline">$X$</span>取值的有限大小的字母集合，熵的含义是：当了解到字母集合中<strong>一个</strong>字母出现时候，一个人能够获得信息量的的<strong>统计均值</strong>。</p>
+<div class="katex-display-block">$$
+H(X):= E[-log_{2}P_{X}(X)] = E(I(X))
+$$</div>
+<p>在计算熵的时候我们规定：</p>
+<div class="katex-display-block">$$
+0\cdot log_{2}0 = 0
+$$</div>
+<p>因为随着<span class="katex-inline">$x\rightarrow0^+$</span>，<span class="katex-inline">$xlog_2x\rightarrow0$</span></p>
+<p>特别的，对于一个服从<span class="katex-inline">$0-1$</span>分布的随机变量<span class="katex-inline">$X$</span>，如果<span class="katex-inline">$P_X(1)=p$</span>，并且<span class="katex-inline">$P_X(0)=1-p，p\in [0,1]$</span>是一个定值，那么：</p>
+<div class="katex-display-block">$$
+H(X) = -p\cdot log_{2}(p)-(1-p)\cdot log_{2}(1-p)
+$$</div>
+<h2 id="2_1">2 熵的属性</h2>
+<h3 id="21-fundamental-inequalityfi">2.1  Fundamental Inequality(FI)</h3>
+<p>对于任意<span class="katex-inline">$x&gt;0，D&gt;1$</span>，下面的不等式：</p>
+<div class="katex-display-block">$$
+log_{D}(x)\le log_{D}(e)\cdot (x-1) \tag{2-1}
+$$</div>
+<p>成立，且等号当且仅当<span class="katex-inline">$x=1$</span>时成立</p>
+<p>令<span class="katex-inline">$y=\frac{1}{x}$</span>代入上式，亦得：</p>
+<div class="katex-display-block">$$
+log_{D}(y)\ge log_{D}(e)\cdot (1-\frac{1}{y}) \tag{2-2}
+$$</div>
+<p>对于任意<span class="katex-inline">$y&gt;0$</span>成立，并且等号当且仅当<span class="katex-inline">$y=1$</span>时成立。</p>
+<h3 id="22-nonenegativity">2.2  Nonenegativity</h3>
+<p><span class="katex-inline">$H(X) \ge 0$</span> 恒成立，且等号当且仅当X是确定性的时候成立。</p>
+<h3 id="23-upper-bound-on-entropy">2.3  Upper bound on entropy</h3>
+<p>如果随机变量<span class="katex-inline">$X$</span>从一个有限字母集合<span class="katex-inline">$\mathcal{X}$</span>中取值，那么无论随机变量<span class="katex-inline">$X$</span>的概率分布如何，它的熵有一个上界：</p>
+<div class="katex-display-block">$$
+H(X)\le log_{2}|\mathcal{X}| \tag{2-3}
+$$</div>
+<p>其中<span class="katex-inline">$|\mathcal{X}|$</span>表示字母集合<span class="katex-inline">$\mathcal{X}$</span>的大小，等号当且仅当<span class="katex-inline">$X$</span>服从<strong>均匀分布</strong>成立。这个上界还叫Hartley's function or entrophy</p>
+<h3 id="24-log-sum-inequlity">2.4  Log-sum inequlity</h3>
+<p>对于所有非负数，<span class="katex-inline">$a_1, a_2, ..., a_n$</span>和<span class="katex-inline">$b_1, b_2, ..., b_n$</span>，有不等式：</p>
+<div class="katex-display-block">$$
+\sum _{i = 1}^{n}(a_{i} log_{D}\frac{a_{i}}{b_{i}})\ge (\sum _{i = 1}^{n}a_{i}) log_{D} \frac{\sum _{i = 1}^{n}a_{i}}{\sum _{i = 1}^{n}b_{i}} \tag{2-4}
+$$</div>
+<p>等式当且仅当对于所有的<span class="katex-inline">$i=1, ..., n$</span>，</p>
+<div class="katex-display-block">$$
+\frac{a_{i}}{b_{i}} = \frac{\sum _{j = 1}^{n}a_{j}}{\sum _{j = 1}^{n}b_{j}}
+$$</div>
+<p>证明可以使用著名的琴生不等式加权版(Jensen's inequality)。</p>
+<h4 id="_2">凸集</h4>
+<p>一个集合是凸集(convex set)，如果对任意<span class="katex-inline">$x_1,x_2\in C$</span>和<span class="katex-inline">$\theta \in [0, 1]$</span> 都有：</p>
+<div class="katex-display-block">$$
+\theta x_{1}+(1-\theta )x_{2}\in C
+$$</div>
+<p>仿射集自然是凸集的一种，类比于仿射集的相关概念，我们可以得到<strong>凸包</strong>（<em>convex hull</em> ）的定义：</p>
+<div class="katex-display-block">$$
+\mathrm{conv}C = {\theta _{1}x_{1}+⋯+\theta _{k}x_{k}\mid x_{i}\in C,\theta _{i}\ge 0,i = 1,…,k,\theta _{1}+⋯+\theta _{k} = 1}
+$$</div>
+<h4 id="_3">严格凸函数</h4>
+<p><span class="katex-inline">$f:R^n \rightarrow R$</span>如果定义域是凸集，有<span class="katex-inline">$\forall x,y, and \; when \; \theta \in [0,1]$</span>有：</p>
+<div class="katex-display-block">$$
+f(\theta x+(1-\theta )y)\le \theta f(x)+(1-\theta )f(y) \tag{2-5}
+$$</div>
+<p>成立，且当<span class="katex-inline">$\theta \in (0,1)$</span>且<span class="katex-inline">$x \ne y$</span>时候，上述不等式不等号严格成立，则<span class="katex-inline">$f$</span>称为严格凸函数。</p>
+<h4 id="_4">📌琴生不等式</h4>
+<p>对于任何严格凸函数(strictly convex function)<span class="katex-inline">$f(\cdot )$</span>，如果<span class="katex-inline">$\alpha_i\ge0$</span>并且<span class="katex-inline">$\sum_{i=1}^{n}{\alpha_i}=1$</span>，则：</p>
+<div class="katex-display-block">$$
+\sum _{i = 1}^{n}\alpha f(t_{i})\ge f(\sum _{i = 1}^{n}\alpha _{i}t_{i}) \tag{2-6}
+$$</div>
+<p>成立，且等号当且仅当<span class="katex-inline">$t_1=t_2=...t_n=Const.num$</span></p>
+<h2 id="3">3  联合熵和条件熵</h2>
+<blockquote>
+<p><strong>回顾</strong>条件概率，这里千万<strong>记住</strong>：<span class="katex-inline">$P(X,Y|Z)$</span>的含义是<span class="katex-inline">$P((X,Y)|Z)$</span>也就是，在<span class="katex-inline">$Z$</span>发生的条件下，<span class="katex-inline">$X,Y$</span>一起发生的概率。同理，<span class="katex-inline">$P(Y|X,Z)$</span>的含义是<span class="katex-inline">$P(Y|(X,Z))$</span>也就是，在<span class="katex-inline">$X,Z$</span>均发生的条件下 <span class="katex-inline">$Y$</span>发生的概率。总之，<strong>'<span class="katex-inline">$\; | \;$</span>'</strong>左右是一个整体，<strong>'<span class="katex-inline">$，$</span>'</strong>的运算优先级<strong>高于 '<span class="katex-inline">$\; | \;$</span>'</strong></p>
+</blockquote>
+<h3 id="31">3.1  二维元素事件的自信息</h3>
+<p>一对随机变量<span class="katex-inline">$(X,Y)$</span>，其联合概率质量函数为<span class="katex-inline">$P_{X,Y}(\cdot ,\cdot )$</span>，则对于元事件<span class="katex-inline">$\left\{ X=x,Y=y \right\}$</span>，其自信息为：</p>
+<div class="katex-display-block">$$
+\mathcal{I}(x,y):= -log_{2}P_{X,Y}(x,y) \tag{3-1}
+$$</div>
+<h3 id="32">3.2  联合熵的定义</h3>
+<p>随机变量<span class="katex-inline">$(X,Y)$</span>的熵定义为：</p>
+<div class="katex-display-block">$$
+H(X,Y):= -\sum _{(x,y)\in \mathcal{X}\times \mathcal{Y}}P_{X,Y}(x,y)\cdot log_{2}P_{X,Y}(x,y) \tag{3-2}
+$$</div>
+<h3 id="33">3.3  条件熵的定义</h3>
+<p>给定两个联合分布的随机变量<span class="katex-inline">$X,Y$</span>，考虑<span class="katex-inline">$X$</span>对于<span class="katex-inline">$Y$</span>的条件熵<span class="katex-inline">$H(Y|X)$</span>定义为：</p>
+<div class="katex-display-block">$$
+\begin{aligned}
+ \begin{aligned} H(Y|X) = E[-log_{2}P_{Y|X}(Y|X)] \\ = -\sum _{(x,y)\in \mathcal{X}\times \mathcal{Y}}P_{X,Y}(x,y)\cdot log_{2}P_{Y|X}(y|x) \\ = \sum _{x\in \mathcal{X}}P_{X}(x)(-\sum _{y\in \mathcal{Y}}P_{Y|X}(y|x)\cdot log_{2}P_{Y|X}(y|x)) \\ = \sum _{x\in \mathcal{X}}P_{X}(x)\cdot H(Y|X = x)
+\end{aligned} \tag{3-3} \end{aligned}
+$$</div>
+<h3 id="34">3.4  定理和推论</h3>
+<h4 id="_5">熵的链式法则</h4>
+<div class="katex-display-block">$$
+H(X,Y) = H(X)+H(Y|X)
+$$</div>
+<p>由联合熵的定义知：<span class="katex-inline">$H(X,Y)=H(Y,X)$</span>，具有可交换性。所以：</p>
+<div class="katex-display-block">$$
+H(X,Y) = H(X)+H(Y|X) = H(Y)+H(X|Y) = H(Y,X) \tag{3-4}
+$$</div>
+<p>进一步有：</p>
+<div class="katex-display-block">$$
+H(X)-H(X|Y) = H(Y)-H(Y|X) \tag{3-5}
+$$</div>
+<p>上面等式中两边的含义就是后面会介绍的<strong>互信息(mutual information)</strong>！</p>
+<h4 id="_6">条件熵的链式法则</h4>
+<div class="katex-display-block">$$
+H(X,Y|Z) = H(X|Z)+H(Y|X,Z) \tag{3-6}
+$$</div>
+<p>通俗理解，就是熵的链式法则的推广，只不过熵的链式法则是在全局事件空间<span class="katex-inline">$\Omega$</span>下，</p>
+<div class="katex-display-block">$$
+H(X,Y) = H(X)+H(Y|X) \\text{if } f H(X,Y|Ω) = H(X|Ω)+H(Y|X,Ω)
+$$</div>
+<p>而条件熵则是在局部事件空间<span class="katex-inline">$Z$</span>中。</p>
+<h2 id="4">4 联合熵和条件熵的属性</h2>
+<h3 id="41-conditioning-never-increases-entrophy">4.1  条件不增性 Conditioning never increases entrophy</h3>
+<p>引入条件后，事件空间不确定性不可能增加，可以认为产生了信息增益：</p>
+<div class="katex-display-block">$$
+H(X|Y)\le H(X) \tag{4-1}
+$$</div>
+<p>当且仅当<span class="katex-inline">$X,Y$</span>独立时候取等。</p>
+<h3 id="42-additivive-for-independent-random-variables">4.2  独立可加性 Additivive for independent random variables</h3>
+<p>对于相互独立的随机变量<span class="katex-inline">$X,Y$</span>，其联合熵可以表示为：</p>
+<div class="katex-display-block">$$
+H(X,Y) = H(X)+H(Y) \tag{4-2}
+$$</div>
+<h3 id="43-conditional-entrophy-is-lower-additive">4.3  条件不等式 Conditional entrophy is lower additive</h3>
+<div class="katex-display-block">$$
+H(X_{1},X_{2}|Y_{1},Y_{2})\le H(X_{1}|Y_{1})+H(X_{2}|Y_{2}) \tag{4-3}
+$$</div>
+<h1 id="mutual-information">※  Mutual Information</h1>
+<h2 id="1_2">1  互信息的定义</h2>
+<p>通俗理解：对于两个随机变量<span class="katex-inline">$X$</span>和<span class="katex-inline">$Y$</span>，当观察到某一个随机变量时候，另一个随机变量不确定性减少的量。很显然，由定义容易推断其有对称性。事实上，它就隐藏在上一章熵的链式法则中：</p>
+<div class="katex-display-block">$$
+I(X; Y):= H(X)-H(X|Y) = H(Y)-H(Y|X) = I(Y; X) \tag{1-1}
+$$</div>
+<h2 id="2_2">2  互信息的属性</h2>
+<h3 id="21_1">2.1  互信息的等价表达式</h3>
+<div class="katex-display-block">$$
+\begin{aligned}
+ \begin{aligned} I(X; Y) = \sum _{x\in \mathcal{X}}\sum _{y\in \mathcal{Y}}P_{X,Y}(x,y)\cdot log_{2}\frac{P_{X,Y}(x,y)}{P_{X}(x)P_{Y}(y)} \\ = I(Y; X) = H(Y)-H(Y|X) \\ = H(X)+H(Y)-H(X,Y)
+\end{aligned} \tag{2-1} \end{aligned}
+$$</div>
+<p>上述三个等式都可以根据熵的定义容易推出。</p>
+<h3 id="22_1">2.2  互信息不大于单随机变量的熵</h3>
+<div class="katex-display-block">$$
+I(X; Y)\le H(X) \tag{2-2}
+$$</div>
+<p>等号当且仅当对于一些<span class="katex-inline">$X=f(Y)$</span>情况成立。</p>
+<h3 id="23">2.3  互信息非负性</h3>
+<div class="katex-display-block">$$
+I(X; Y)\ge 0, as H(X|Y)\le H(X) \tag{2-3}
+$$</div>
+<p>等号当且仅当<span class="katex-inline">$X和Y$</span>相互独立。</p>
+<h3 id="24">2.4 互信息的上界</h3>
+<div class="katex-display-block">$$
+I(X; Y)\le min{log_{2}|\mathcal{X}|, log_{2}|\mathcal{Y}|} \tag{2-4}
+$$</div>
+<p>这可以根据互信息的定义式以及熵的上界不等式推出。</p>
+<p>熵，条件熵，联合熵，之间的Venn图关系如下：</p>
+<p><img alt="image-20231120102233367" src="Self_information.assets/image-20231120102233367.png" /></p>
+<h2 id="3_1">3  条件互信息</h2>
+<blockquote>
+<p><strong>注意：</strong>在<span class="katex-inline">$I(\cdot )$</span>中，关系运算符的优先级从高到低是  <span class="katex-inline">$, \;\;\;\; ; \;\;\;\; |$</span></p>
+</blockquote>
+<h3 id="31_1">3.1  定义</h3>
+<p>在获取了知识<span class="katex-inline">$Z$</span>情况下，随机变量<span class="katex-inline">$X和Y$</span>之间的共享不确定性。</p>
+<div class="katex-display-block">$$
+I(X; Y|Z) = H(X|Z)-H(X|Y,Z) \tag{3-1}
+$$</div>
+<h3 id="32_1">3.2  联合互信息和互信息的链式法则</h3>
+<p>定义随机变量<span class="katex-inline">$X$</span>和联合随机变量<span class="katex-inline">$(Y,Z)$</span>联合互信息：</p>
+<div class="katex-display-block">$$
+I(X; Y,Z):= H(X)-H(X|Y,Z) \tag{3-2}
+$$</div>
+<p>我们有链式法则如下：</p>
+<div class="katex-display-block">$$
+I(X; Y,Z) = I(X; Y)+I(X; Z|Y) = I(X; Z)+I(X; Y|Z) \tag{3-3}
+$$</div>
+<p>使用Venn图理解就是：</p>
+<p><img alt="image-20231120145146190" src="Self_information.assets/image-20231120145146190.png" /></p>
+<p>其中上图图紫色实心区域为：<span class="katex-inline">$I(X;\; Z)$</span>，蓝色实心区域为：<span class="katex-inline">$I(X;\; Y|Z)=H(X|Z)-H(X|Y,Z)$</span>。而链式法则第二个等号右侧的含义就是 <strong>紫色</strong>实心区域 <strong>+</strong> <strong>蓝色</strong>实心区域 得到随机变量<span class="katex-inline">$X$</span>与联合分布<span class="katex-inline">$(Y,Z)$</span>之间的互信息：<span class="katex-inline">$I(X;\; Y,Z)$</span></p>
+<h1 id="_7">参考链接🔗</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/592345064">1. No.2 信息熵的广义可加性：条件熵、互信息的几何含义 - 知乎 (zhihu.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/592737528">2. No.3 梳理汇总：信息熵、条件熵和互信息的性质及其推导 - 知乎 (zhihu.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/560913131">3. 琴生不等式（Jensen's inequality)的证明 - 知乎 (zhihu.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/452821674">4. Convex function - 知乎 (zhihu.com)</a></p>
+          </div>
 
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
+          <div class="tag-widget post-tag-container mb-5 mt-5">
+            <div class="tagcloud">
+              <a href="../../../blog.html?tag=math" class="tag-cloud-link">Math</a>
+              <a href="../../../blog.html?tag=information_theory" class="tag-cloud-link">Information Theory</a>
+              <a href="../../../blog.html?tag=notes" class="tag-cloud-link">Notes</a>
+            </div>
+          </div>
+        </article>
+      </div>
+<div class="col-lg-4 sidebar ftco-animate bg-light">
+  <div class="sidebar-box">
+    <div class="project-note">
+      <h3 class="sidebar-heading">Blog Workflow</h3>
+      <p>These pages are generated from Markdown with front matter, while keeping the current site style.</p>
+    </div>
+  </div>
 
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Categories</h3>
+    <ul class="categories">
+      <li><a href="../../../blog.html?category=ml">ML <span>(1)</span></a></li>
+      <li><a href="../../../blog.html?category=math">Math <span>(2)</span></a></li>
+    </ul>
+  </div>
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.timepicker.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>-->
-	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
-	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Recent Posts</h3>
+    <div class="block-21 mb-4 d-flex">
+      <a class="blog-img mr-4" href="../../../blog/ml/reinforcement_learning/importance_sampling.html" style="background-image: url(../../../images/blog/category_cover/ai.jpg);"></a>
+      <div class="text">
+        <h3 class="heading"><a href="../../../blog/ml/reinforcement_learning/importance_sampling.html">强化学习 - 重要性采样及应用</a></h3>
+        <div class="meta">
+          <div><a href="../../../blog/ml/reinforcement_learning/importance_sampling.html"><span class="icon-calendar"></span> Feb 24, 2025</a></div>
+          <div><a href="../../../blog.html?category=ml"><span class="icon-folder-o"></span> ML</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-21 mb-4 d-flex">
+      <a class="blog-img mr-4" href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html" style="background-image: url(../../../images/blog/category_cover/math.jpg);"></a>
+      <div class="text">
+        <h3 class="heading"><a href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html">信息论 (二)</a></h3>
+        <div class="meta">
+          <div><a href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html"><span class="icon-calendar"></span> Nov 27, 2023</a></div>
+          <div><a href="../../../blog.html?category=math"><span class="icon-folder-o"></span> Math</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-21 mb-4 d-flex">
+      <a class="blog-img mr-4" href="../../../blog/math/information_theory/information_theory_2023_11_17.html" style="background-image: url(../../../images/blog/category_cover/math.jpg);"></a>
+      <div class="text">
+        <h3 class="heading"><a href="../../../blog/math/information_theory/information_theory_2023_11_17.html">信息论 (一)</a></h3>
+        <div class="meta">
+          <div><a href="../../../blog/math/information_theory/information_theory_2023_11_17.html"><span class="icon-calendar"></span> Nov 17, 2023</a></div>
+          <div><a href="../../../blog.html?category=math"><span class="icon-folder-o"></span> Math</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</body>
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Tag Cloud</h3>
+    <div class="tagcloud">
+      <a href="../../../blog.html?tag=divergence" class="tag-cloud-link">Divergence</a>
+      <a href="../../../blog.html?tag=importance_sampling" class="tag-cloud-link">Importance Sampling</a>
+      <a href="../../../blog.html?tag=information_theory" class="tag-cloud-link">Information Theory</a>
+      <a href="../../../blog.html?tag=ml" class="tag-cloud-link">ML</a>
+      <a href="../../../blog.html?tag=math" class="tag-cloud-link">Math</a>
+      <a href="../../../blog.html?tag=notes" class="tag-cloud-link">Notes</a>
+      <a href="../../../blog.html?tag=reinforcement_learning" class="tag-cloud-link">Reinforcement Learning</a>
+    </div>
+  </div>
 
+  <div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Archives</h3>
+    <ul class="categories">
+      <li><a href="../../../blog.html?archive=2025-02">February 2025 <span>(1)</span></a></li>
+      <li><a href="../../../blog.html?archive=2023-11">November 2023 <span>(2)</span></a></li>
+    </ul>
+  </div>
+</div>    </div>
+  </div>
+</section>
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+  <div class="container px-md-5">
+    <div class="row mb-5">
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4 ml-md-4">
+          <h2 class="ftco-heading-2">Recent Writing</h2>
+          <ul class="list-unstyled categories">
+            <li><a href="../../../blog/ml/reinforcement_learning/importance_sampling.html">强化学习 - 重要性采样及应用 <span>Feb 24, 2025</span></a></li>
+            <li><a href="../../../blog/math/information_theory/Divergence_Variational_Distance_2023_11_27.html">信息论 (二) <span>Nov 27, 2023</span></a></li>
+            <li><a href="../../../blog/math/information_theory/information_theory_2023_11_17.html">信息论 (一) <span>Nov 17, 2023</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Archives</h2>
+          <ul class="list-unstyled categories">
+            <li><a href="../../../blog.html">February 2025 <span>(1)</span></a></li>
+            <li><a href="../../../blog.html">November 2023 <span>(2)</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Have a Question?</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><span class="icon icon-map-marker"></span><span class="text">Wuhan / Shanghai / On the web</span></li>
+              <li><a href="../../../contact.html"><span class="icon icon-envelope"></span><span class="text">Reach out from the contact page</span></a></li>
+              <li><a href="../../../blog.html"><span class="icon icon-book"></span><span class="text">Browse all writing</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is based on <a href="https://colorlib.com" target="_blank" rel="noreferrer">Colorlib</a></p>
+      </div>
+    </div>
+  </div>
+</footer>      </div>
+    </div>
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"></circle><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"></circle></svg></div>
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="../../../js/popper.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../../js/jquery.easing.1.3.js"></script>
+    <script src="../../../js/jquery.waypoints.min.js"></script>
+    <script src="../../../js/jquery.stellar.min.js"></script>
+    <script src="../../../js/owl.carousel.min.js"></script>
+    <script src="../../../js/jquery.magnific-popup.min.js"></script>
+    <script src="../../../js/aos.js"></script>
+    <script src="../../../js/jquery.animateNumber.min.js"></script>
+    <script src="../../../js/bootstrap-datepicker.js"></script>
+    <script src="../../../js/scrollax.min.js"></script>
+    <script src="../../../js/google-map.js"></script>
+    <script src="../../../js/main.js"></script>
+    <script>
+      hljs.highlightAll();
+
+      // KaTeX auto-render initializer
+      function initKaTeX() {
+        if (typeof renderMathInElement === "function") {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "\\[", right: "\\]", display: true },
+              { left: "$", right: "$", display: false },
+              { left: "\\(", right: "\\)", display: false }
+            ],
+            throwOnError: false,
+            ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+          });
+        } else {
+          setTimeout(initKaTeX, 60);
+        }
+      }
+      initKaTeX();
+
+      // Code block enhancement: Language badges & Copy button
+      document.querySelectorAll(".blog-markdown pre").forEach(function(pre) {
+        var code = pre.querySelector("code");
+        var container = document.createElement("div");
+        container.className = "code-block-wrapper";
+        pre.parentNode.insertBefore(container, pre);
+        container.appendChild(pre);
+
+        var header = document.createElement("div");
+        header.className = "code-block-header";
+
+        var lang = "CODE";
+        if (code) {
+          code.classList.forEach(function(cls) {
+            if (cls.startsWith("language-") || cls.startsWith("lang-")) {
+              lang = cls.replace(/^language-|^lang-/, "").toUpperCase();
+            }
+          });
+        }
+        var langLabel = document.createElement("span");
+        langLabel.className = "code-lang-label";
+        langLabel.textContent = lang;
+        header.appendChild(langLabel);
+
+        var copyBtn = document.createElement("button");
+        copyBtn.className = "code-copy-btn";
+        copyBtn.type = "button";
+        copyBtn.textContent = "Copy";
+        copyBtn.addEventListener("click", function() {
+          var textToCopy = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            copyBtn.textContent = "Copied!";
+            copyBtn.classList.add("copied");
+            setTimeout(function() {
+              copyBtn.textContent = "Copy";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          }).catch(function() {
+            copyBtn.textContent = "Failed";
+          });
+        });
+        header.appendChild(copyBtn);
+        container.insertBefore(header, pre);
+      });
+
+      function resizeEmbeddedFrame(frame) {
+        try {
+          const doc = frame.contentWindow.document;
+          const body = doc.body;
+          const html = doc.documentElement;
+          const nextHeight = Math.max(body.scrollHeight, html.scrollHeight);
+          if (nextHeight) {
+            frame.style.height = nextHeight + "px";
+          }
+        } catch (error) {
+          frame.classList.add("dynamic-iframe-fallback");
+        }
+      }
+
+      document.querySelectorAll("iframe[data-auto-height='true']").forEach((frame) => {
+        frame.addEventListener("load", () => resizeEmbeddedFrame(frame));
+      });
+    </script>
+  </body>
 </html>

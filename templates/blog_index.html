@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="ftco-section ftco-bread">
+  <div class="container">
+    <div class="row no-gutters slider-text justify-content-center align-items-center">
+      <div class="col-md-8 ftco-animate">
+        <p class="breadcrumbs"><span class="mr-2"><a href="{{ root_prefix }}index.html">Home</a></span> <span>Blog</span></p>
+        <h1 class="bread">Writing & Notes</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ftco-section">
+  <div class="container">
+    <div class="row d-flex">
+      <div class="col-lg-8">
+        <div class="sidebar-box ftco-animate blog-tools-panel">
+          <form id="blog-search-form" class="search-form blog-search-form">
+            <div class="form-group">
+              <span class="icon icon-search"></span>
+              <input id="blog-search-input" type="text" class="form-control" placeholder="Search blog titles">
+            </div>
+          </form>
+          <div class="blog-filter-toolbar">
+            <div id="blog-active-filters" class="blog-active-filters"></div>
+            <div id="blog-results-summary" class="blog-results-summary"></div>
+          </div>
+        </div>
+        <div class="row">
+          {% for post in site.published_posts %}
+          <div
+            class="col-md-12 blog-post-card"
+            data-title="{{ post.title | lower }}"
+            data-category="{{ post.category_slug }}"
+            data-archive="{{ post.archive_slug }}"
+            data-tags="{% for tag in post.tags %}{{ slugify(tag) }}{% if not loop.last %},{% endif %}{% endfor %}"
+          >
+            <div class="blog-entry ftco-animate d-md-flex blog-entry-generated">
+              <a href="{{ root_prefix }}{{ post.permalink }}" class="img img-2" style="background-image: url({{ root_prefix }}{{ post.cover_image }});"></a>
+              <div class="text text-2 p-4">
+                <div>
+                  <h3 class="mb-2"><a href="{{ root_prefix }}{{ post.permalink }}">{{ post.title }}</a></h3>
+                  <div class="meta-wrap">
+                    <p class="meta mb-2">
+                      <span>{{ post.display_date }}</span>
+                      <span><a href="{{ blog_filter_link(root_prefix, category=post.category_slug) }}">{{ post.category }}</a></span>
+                      {% if post.series %}
+                      <span>{{ post.series }}</span>
+                      {% endif %}
+                      <span>约 {{ post.word_count }} 字</span>
+                    </p>
+                  </div>
+                  <p class="mb-3">{{ post.summary }}</p>
+                </div>
+                <div class="blog-entry-footer d-flex align-items-center justify-content-between flex-wrap">
+                  <div class="tagcloud blog-entry-tags">
+                    {% for tag in post.tags %}
+                    <a href="{{ blog_filter_link(root_prefix, tag=slugify(tag)) }}" class="tag-cloud-link">{{ tag }}</a>
+                    {% endfor %}
+                  </div>
+                  <a href="{{ root_prefix }}{{ post.permalink }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div id="blog-no-results" class="blog-no-results" hidden>No posts match the current filter.</div>
+        <div class="row">
+          <div class="col">
+            <div class="block-27 blog-pagination-wrap">
+              <ul id="blog-pagination"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include "partials/sidebar.html" %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const posts = Array.from(document.querySelectorAll(".blog-post-card"));
+    const searchForm = document.getElementById("blog-search-form");
+    const searchInput = document.getElementById("blog-search-input");
+    const activeFilters = document.getElementById("blog-active-filters");
+    const resultsSummary = document.getElementById("blog-results-summary");
+    const noResults = document.getElementById("blog-no-results");
+    const pagination = document.getElementById("blog-pagination");
+    const postsPerPage = 5;
+
+    function normalize(text) {
+      return (text || "").trim().toLowerCase();
+    }
+
+    function getState() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        q: normalize(params.get("q") || ""),
+        tag: normalize(params.get("tag") || ""),
+        category: normalize(params.get("category") || ""),
+        archive: normalize(params.get("archive") || ""),
+        page: Math.max(parseInt(params.get("page") || "1", 10), 1),
+      };
+    }
+
+    function setState(nextState) {
+      const params = new URLSearchParams();
+      Object.entries(nextState).forEach(([key, value]) => {
+        if (value && !(key === "page" && Number(value) === 1)) {
+          params.set(key, String(value));
+        }
+      });
+      const query = params.toString();
+      const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+      window.history.replaceState({}, "", nextUrl);
+      render();
+    }
+
+    function buildChip(label, key) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "blog-filter-chip";
+      button.textContent = label + " ×";
+      button.addEventListener("click", () => {
+        const state = getState();
+        state[key] = "";
+        state.page = 1;
+        setState(state);
+      });
+      return button;
+    }
+
+    function renderActiveFilters(state) {
+      activeFilters.innerHTML = "";
+      const chips = [];
+      if (state.q) chips.push(buildChip(`Search: ${state.q}`, "q"));
+      if (state.tag) chips.push(buildChip(`Tag: ${state.tag}`, "tag"));
+      if (state.category) chips.push(buildChip(`Category: ${state.category}`, "category"));
+      if (state.archive) chips.push(buildChip(`Archive: ${state.archive}`, "archive"));
+      chips.forEach((chip) => activeFilters.appendChild(chip));
+      if (chips.length) {
+        const clear = document.createElement("button");
+        clear.type = "button";
+        clear.className = "blog-filter-clear";
+        clear.textContent = "Clear all";
+        clear.addEventListener("click", () => setState({ q: "", tag: "", category: "", archive: "", page: 1 }));
+        activeFilters.appendChild(clear);
+      }
+    }
+
+    function filterPosts(state) {
+      return posts.filter((post) => {
+        const title = normalize(post.dataset.title);
+        const category = normalize(post.dataset.category);
+        const archive = normalize(post.dataset.archive);
+        const tags = normalize(post.dataset.tags).split(",").filter(Boolean);
+
+        if (state.q && !title.includes(state.q)) return false;
+        if (state.category && category !== state.category) return false;
+        if (state.archive && archive !== state.archive) return false;
+        if (state.tag && !tags.includes(state.tag)) return false;
+        return true;
+      });
+    }
+
+    function renderPagination(totalPages, currentPage) {
+      pagination.innerHTML = "";
+      if (totalPages <= 1) return;
+
+      const items = [];
+      items.push({ label: "<", page: Math.max(currentPage - 1, 1), disabled: currentPage === 1 });
+      for (let page = 1; page <= totalPages; page += 1) {
+        items.push({ label: String(page), page, active: page === currentPage });
+      }
+      items.push({ label: ">", page: Math.min(currentPage + 1, totalPages), disabled: currentPage === totalPages });
+
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        if (item.active) li.classList.add("active");
+        if (item.disabled) li.classList.add("disabled");
+        const el = document.createElement(item.active ? "span" : "a");
+        el.textContent = item.label;
+        if (!item.active) {
+          el.href = "#";
+          el.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (item.disabled) return;
+            const state = getState();
+            state.page = item.page;
+            setState(state);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+        }
+        li.appendChild(el);
+        pagination.appendChild(li);
+      });
+    }
+
+    function render() {
+      const state = getState();
+      searchInput.value = state.q;
+      renderActiveFilters(state);
+
+      const filtered = filterPosts(state);
+      const totalPages = Math.max(Math.ceil(filtered.length / postsPerPage), 1);
+      const currentPage = Math.min(state.page, totalPages);
+      const start = (currentPage - 1) * postsPerPage;
+      const visible = filtered.slice(start, start + postsPerPage);
+
+      posts.forEach((post) => {
+        post.hidden = !visible.includes(post);
+      });
+
+      noResults.hidden = filtered.length !== 0;
+      resultsSummary.textContent = filtered.length
+        ? `Showing ${visible.length} of ${filtered.length} matching posts · Page ${currentPage}/${totalPages}`
+        : "No matching posts";
+
+      if (currentPage !== state.page) {
+        state.page = currentPage;
+        const params = new URLSearchParams(window.location.search);
+        params.set("page", String(currentPage));
+        window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+      }
+
+      renderPagination(totalPages, currentPage);
+    }
+
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const state = getState();
+      state.q = normalize(searchInput.value);
+      state.page = 1;
+      setState(state);
+    });
+
+    searchInput.addEventListener("search", () => {
+      const state = getState();
+      state.q = normalize(searchInput.value);
+      state.page = 1;
+      setState(state);
+    });
+
+    render();
+  })();
+</script>
+{% endblock %}
